@@ -30,10 +30,6 @@
         <span class="w-6 h-6"><i class="fa-solid fa-clock-rotate-left"></i></span> История
       </a>
 
-      <a href="index.php?page=cards" class="<?php echo ($page === "cards") ? $active : $default ?>">
-        <span class="w-6 h-6"><i class="fa-solid fa-credit-card"></i></span> Карты
-      </a>
-
       <a href="index.php?page=investment" class="<?php echo ($page === "investment") ? $active : $default ?>">
         <span class="w-6 h-6"><i class="fa-solid fa-money-bill-trend-up"></i></span> Инвестиции
       </a>

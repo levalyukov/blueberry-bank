@@ -1,5 +1,5 @@
 <?php
-    error_reporting(0);
+    // error_reporting(0);
 
     $db_server   = 'localhost';
     $db_name     = 'bank';
@@ -11,5 +11,5 @@
 
     if ($conn->connect_error) {
         $db_error = "503";
-    };
+    }
 ?>

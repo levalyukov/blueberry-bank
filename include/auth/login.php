@@ -16,7 +16,7 @@
     $_SESSION["user"] = $user;
   } else {
     $_SESSION["auth_error"] = "Неверная почта или пароль.";
-  };
+  }
 
   header("Location: ../../index.php");
   exit();

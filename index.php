@@ -31,9 +31,6 @@
                         case "history":
                             echo "История"; 
                             break;
-                        case "cards":
-                            echo "Карты"; 
-                            break;
                         case "investment":
                             echo "Инвестиции"; 
                             break;
@@ -72,15 +69,13 @@
             <?php 
                 if ($role !== "guest") {
                     include_once './components/navmenu.php'; 
+
                     switch ($page) {
                         case 'dashboard':
                             include './components/dashboard.php'; 
                             break;
                         case 'history':
                             include './components/history.php'; 
-                            break;
-                        case 'cards':
-                            include './components/cards.php'; 
                             break;
                         case 'investment':
                             include './components/investment.php'; 
