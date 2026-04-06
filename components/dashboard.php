@@ -123,7 +123,8 @@
           </a>
         </div>
       <?php else: ?>
-        <a href="" class="w-full border-1 border-slate-400 rounded-md p-4 text-center text-slate-700 bg-slate-100 hover:bg-blue-100 hover:border-blue-500 hover:text-blue-500">
+        <a href="" class="w-full border-1 border-slate-400 rounded-md p-4 text-center text-slate-700 
+        bg-slate-100 hover:bg-blue-100 hover:border-blue-500 hover:text-blue-500">
           Открыть брокерский счёт
         </a>
     </article>
@@ -140,7 +141,7 @@
 
         <?php if (count(get_user_last_history((int)$role['client_id'])) > 0): ?>
 
-          <?php for ($i = 0; $i < 10; $i++): ?>
+          <?php for ($i = 0; $i < 4; $i++): ?>
           <article class="flex justify-between items-center gap-4">
             <span class="flex gap-4">
               <span class="h-13 w-13 bg-slate-200 rounded-xl flex justify-center items-center text-green-500 text-xl">
