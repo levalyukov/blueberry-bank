@@ -1,3 +1,12 @@
+<?php 
+  require_once('include/investment-market.php');
+
+  $stocks = get_all_stocks();
+  $bonds = get_all_bonds();
+  $currency = get_all_currency();
+  $metals = get_all_metals();
+?>
+
 <div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center ">
   <div class="w-250 h-[calc(100% - 5)] bg-slate-50 m-5 rounded-xl shadow-md">
     <header class="p-2 flex justify-end">
@@ -13,7 +22,7 @@
       <section class="flex gap-10">
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Акции</h1>
-          <?php for ($i = 1; $i < 6; $i++): ?>
+          <?php for ($i = 0; $i < count($stocks); $i++): ?>
           <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="https://s3-symbol-logo.tradingview.com/sberbank--600.png" alt="">
@@ -33,7 +42,7 @@
 
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Облигации</h1>
-          <?php for ($i = 1; $i < 5; $i++): ?>
+          <?php for ($i = 0; $i < count($bonds); $i++): ?>
           <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="https://www.yarcom.ru/sites/default/files/styles/1600x1600/public/news/photo/2023/03/gq6LaAS-jNEwkQt.jpg.webp?itok=gH5L2ZoF" alt="">
@@ -55,7 +64,7 @@
       <section class="flex gap-10">
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Валюта</h1>
-          <?php for ($i = 1; $i < 2; $i++): ?>
+          <?php for ($i = 0; $i < count($currency); $i++): ?>
           <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="assets/flags/US.svg" alt="">
@@ -75,7 +84,7 @@
 
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Драгоценные металлы</h1>
-          <?php for ($i = 1; $i < 2; $i++): ?>
+          <?php for ($i = 0; $i < count($metals); $i++): ?>
           <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="https://alfaonline.servicecdn.ru/public/s3/static/investment/img_gold_bar.png" alt="">

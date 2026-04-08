@@ -12,8 +12,8 @@
   $password_confirm = trim($_POST["password-confirmation"]);
   $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-  if (!$conn->query("SHOW TABLES LIKE `clients`")->fetch_row()) {
-    $table = $conn->prepare("CREATE TABLE 'clients (
+  if (!$conn->query("SHOW TABLES LIKE 'clients'")->fetch_row()) {
+    $table = $conn->prepare("CREATE TABLE `clients` (
       `client_id` INT AUTO_INCREMENT PRIMARY KEY,
       `name` TEXT NOT NULL,
       `surname` TEXT NOT NULL,

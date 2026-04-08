@@ -50,80 +50,78 @@
     </article>
 
     <article class="bg-slate-50 h-65 rounded-3xl p-8 flex flex-col">
-      <div class="flex justify-between">
-        <span class="flex flex-col gap-2">
-          <p class="text-slate-400 uppercase py-1">Доходы за месяц</p>
-          <h1 class="
+      <div class="flex flex-col h-full">
+        <div class="flex justify-between">
+          <span class="flex flex-col gap-2">
+            <p class="text-slate-400 uppercase py-1">Доходы за месяц</p>
+            <h1 class="
+                <?php 
+                  if (get_user_month_expenses() < 0) {
+                    echo 'text-slate-500 uppercase text-3xl';
+                  } else {
+                    echo 'text-slate-950 uppercase font-bold text-3xl';
+                  }
+                ?>
+            ">
               <?php 
-                if (get_user_month_expenses() < 0) {
-                  echo 'text-slate-500 uppercase text-3xl';
+                if (get_user_month_income() < 0) {
+                  echo '-';
                 } else {
-                  echo 'text-slate-950 uppercase font-bold text-3xl';
+                  echo number_format(get_user_month_income(), 2, ',', ' ') . ' ₽';
                 }
-              ?>
-          ">
-            <?php 
-              if (get_user_month_income() < 0) {
-                echo '-';
-              } else {
-                echo number_format(get_user_month_income(), 2, ',', ' ') . ' ₽';
-              }
-            ?> 
-          </h1>
-        </span>
+              ?> 
+            </h1>
+          </span>
 
-        <span class="flex flex-col gap-2 mt-auto">
-          <p class="text-slate-400 uppercase py-1">Расходы за месяц</p>
-          <h1 class="
+          <span class="flex flex-col gap-2 mt-auto">
+            <p class="text-slate-400 uppercase py-1">Расходы за месяц</p>
+            <h1 class="
+                <?php 
+                  if (get_user_month_expenses() < 0) {
+                    echo 'text-slate-500 uppercase text-3xl';
+                  } else {
+                    echo 'text-slate-950 uppercase font-bold text-3xl';
+                  }
+                ?>
+            ">
               <?php 
                 if (get_user_month_expenses() < 0) {
-                  echo 'text-slate-500 uppercase text-3xl';
+                  echo '-';
                 } else {
-                  echo 'text-slate-950 uppercase font-bold text-3xl';
+                  echo number_format(get_user_month_expenses(), 2, ',', ' ') . ' ₽';
                 }
               ?>
-          ">
-            <?php 
-              if (get_user_month_expenses() < 0) {
-                echo '-';
-              } else {
-                echo number_format(get_user_month_expenses(), 2, ',', ' ') . ' ₽';
-              }
-            ?>
-        </h1>
-        </span>
+          </h1>
+          </span>
+        </div>
+
+        <div class="flex gap-2 mt-auto">
+          <button class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
+            hover:text-slate-950 hover:bg-slate-300">
+            Пополнить
+          </button>
+          <button class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
+            hover:text-slate-950 hover:bg-slate-300">
+            Перевести
+          </button>
+          <button class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
+            hover:text-slate-950 hover:bg-slate-300">
+            Снять
+          </button>
+        </div>
       </div>
     </article>
 
     <article class="bg-slate-50 h-65 rounded-3xl p-8 flex flex-col gap-2">
       <p class="text-slate-400 uppercase py-1">Инвестиции</p>
       <?php if (has_invenstment_account((int)$role["client_id"])): ?>
-        <h1 class="text-slate-950 uppercase font-bold text-3xl">4 123 012,23 ₽</h1>
-        <p class="text-green-500">+412 301,22 ₽ (+10,52 %)</p>
+        <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_investment_account($role["client_id"]), 2, ',', ' ') ?> ₽</h1>
+        <!-- <p class="text-green-500">+412 301,22 ₽ (+10,52 %)</p> -->
         <div class="grid grid-cols-[repeat(auto-fit,minmax(32px,1fr))] mt-auto gap-1">
-          <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
-            <img class="rounded-2xl object-cover w-16 h-16" src="https://media.licdn.com/dms/image/v2/C4D0BAQGtaNDEUk4FSQ/company-logo_200_200/company-logo_200_200/0/1630556941344/alfa_bank_logo?e=2147483647&v=beta&t=tk5ylRjvC9jx6kHTTkv69QBPXjHV8jsEsGaHnH-dPXw" alt="">
-          </a>
 
-          <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
-            <img class="rounded-2xl object-cover w-16 h-16" src="https://s3-symbol-logo.tradingview.com/rosneft--600.png" alt="">
-          </a>
-
-          <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
-            <img class="rounded-2xl object-cover w-16 h-16" src="https://superpressa.ru/wp-content/uploads/2023/09/sa-20.jpg" alt="">
-          </a>
-
-          <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
-            <img class="rounded-2xl object-cover w-16 h-16" src="https://porti.ru/resource/img/company/logo/1.png" alt="">
-          </a>
-
-          <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
-            <img class="rounded-2xl object-cover w-16 h-16" src="https://static.tildacdn.com/tild3730-3931-4461-b761-323264373931/logo.png" alt="">
-          </a>
-
-          <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
+          <!-- <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
             <img class="rounded-2xl object-cover w-16 h-16" src="https://cdn.forbes.ru/forbes-static/new/2021/11/Company-619d3288c340a-619d3288e8cde.png" alt="">
-          </a>
+          </a> -->
         </div>
       <?php else: ?>
         <a href="index.php?page=investment" class="w-full border-1 border-slate-400 rounded-xl p-4 mt-auto text-center text-slate-700 
