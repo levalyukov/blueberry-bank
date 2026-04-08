@@ -46,14 +46,4 @@
     return -1;
   }
 
-  function get_user_last_history(int $client_id): array
-  {
-    return [1,2,3,4,5,6,7];
-  }
-  
-  function has_invenstment_account(int $client_id): bool
-  {
-    return false;
-  }
-
 ?>

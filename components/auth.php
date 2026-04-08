@@ -33,7 +33,7 @@
 
                     <button type="submint" class="cursor-pointer bg-slate-200/50 p-4 rounded-xl text-slate-700
                     hover:bg-blue-100 hover:text-blue-500 mt-auto">
-                        Авторизоваться 
+                        Войти 
                     </button>
 
                     <p class="text-center text-slate-750">
@@ -157,7 +157,10 @@
                 </form>
             <?php endif ?>
 
-            <p class="text-center text-slate-500">&copy; <?= date("Y") ?>  АО «ББ»</p>
+            <span class="flex flex-col gap-2 mt-4">
+                <p class="text-center text-slate-500">&copy; <?= date("Y") ?>  АО «ББ»</p>
+                <p class="text-center text-slate-500">Генеральная лицензия №0 Банка России</p>
+            </span>
         </div>
     </div>
 </section>

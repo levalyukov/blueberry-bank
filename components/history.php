@@ -54,23 +54,6 @@
         </article>
       <?php endfor ?>
 
-      <h1 class="text-lg font-bold text-slate-950">29 марта</h1>
-
-      <?php for ($i = 1; $i <= 4; $i++): ?>
-        <article class="flex justify-between items-center gap-4">
-          <span class="flex gap-4">
-            <span class="h-13 w-13 bg-slate-300/50 rounded-xl flex justify-center items-center text-sky-500 text-xl">
-              <i class="fa-solid fa-basket-shopping"></i>
-            </span>
-            <span class="flex flex-col">
-              <h1 class="font-bold text-slate-950 text-md">Магнит</h1>
-              <p class="text-slate-700">Продукты • 15:21</p>
-            </span>
-          </span>
-          <p class="text-slate-950">-1 123,92 ₽</p>
-        </article>
-      <?php endfor ?>
-
       <button class="text-slate-700 bg-slate-300/50 cursor-pointer flex justify-center items-center gap-2 p-4 
       hover:bg-slate-300 hover:text-slate-950 rounded-xl mt-auto">Показать еще</button>
     </div>

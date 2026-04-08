@@ -6,7 +6,7 @@
 
 
 <?php
-    $subscribe = false;
+    $subscribe = !false;
 
     $page = $_GET['page'] ?? 'dashboard';
     $active = "cursor-pointer text-blue-500 bg-blue-100 p-3 rounded-xl capitalize flex gap-2 px-4";

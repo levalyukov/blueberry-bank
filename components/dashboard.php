@@ -5,8 +5,9 @@
 -->
 
 <?php 
-
   require_once("include/dashboard.php");
+  require_once("include/investment.php");
+  require_once("include/transactions.php");
 ?>
 
 
@@ -49,47 +50,49 @@
     </article>
 
     <article class="bg-slate-50 h-65 rounded-3xl p-8 flex flex-col">
-      <span class="flex flex-col gap-2">
-        <p class="text-slate-400 uppercase py-1">Доходы за месяц</p>
-        <h1 class="
+      <div class="flex justify-between">
+        <span class="flex flex-col gap-2">
+          <p class="text-slate-400 uppercase py-1">Доходы за месяц</p>
+          <h1 class="
+              <?php 
+                if (get_user_month_expenses() < 0) {
+                  echo 'text-slate-500 uppercase text-3xl';
+                } else {
+                  echo 'text-slate-950 uppercase font-bold text-3xl';
+                }
+              ?>
+          ">
             <?php 
-              if (get_user_month_expenses() < 0) {
-                echo 'text-slate-500 uppercase text-3xl';
+              if (get_user_month_income() < 0) {
+                echo '-';
               } else {
-                echo 'text-slate-950 uppercase font-bold text-3xl';
+                echo number_format(get_user_month_income(), 2, ',', ' ') . ' ₽';
               }
-            ?>
-        ">
-          <?php 
-            if (get_user_month_income() < 0) {
-              echo '-';
-            } else {
-              echo number_format(get_user_month_income(), 2, ',', ' ') . ' ₽';
-            }
-          ?> 
-        </h1>
-      </span>
+            ?> 
+          </h1>
+        </span>
 
-      <span class="flex flex-col gap-2 mt-auto">
-        <p class="text-slate-400 uppercase py-1">Расходы за месяц</p>
-        <h1 class="
+        <span class="flex flex-col gap-2 mt-auto">
+          <p class="text-slate-400 uppercase py-1">Расходы за месяц</p>
+          <h1 class="
+              <?php 
+                if (get_user_month_expenses() < 0) {
+                  echo 'text-slate-500 uppercase text-3xl';
+                } else {
+                  echo 'text-slate-950 uppercase font-bold text-3xl';
+                }
+              ?>
+          ">
             <?php 
               if (get_user_month_expenses() < 0) {
-                echo 'text-slate-500 uppercase text-3xl';
+                echo '-';
               } else {
-                echo 'text-slate-950 uppercase font-bold text-3xl';
+                echo number_format(get_user_month_expenses(), 2, ',', ' ') . ' ₽';
               }
             ?>
-        ">
-          <?php 
-            if (get_user_month_expenses() < 0) {
-              echo '-';
-            } else {
-              echo number_format(get_user_month_expenses(), 2, ',', ' ') . ' ₽';
-            }
-          ?>
-      </h1>
-      </span>
+        </h1>
+        </span>
+      </div>
     </article>
 
     <article class="bg-slate-50 h-65 rounded-3xl p-8 flex flex-col gap-2">
@@ -123,13 +126,12 @@
           </a>
         </div>
       <?php else: ?>
-        <a href="" class="w-full border-1 border-slate-400 rounded-md p-4 text-center text-slate-700 
+        <a href="index.php?page=investment" class="w-full border-1 border-slate-400 rounded-xl p-4 mt-auto text-center text-slate-700 
         bg-slate-100 hover:bg-blue-100 hover:border-blue-500 hover:text-blue-500">
           Открыть брокерский счёт
         </a>
+      <?php endif ?>
     </article>
-
-    <?php endif ?>
 
     <article class="col-span-2 h-full bg-slate-50 rounded-3xl p-8 flex flex-col gap-2">
       <canvas id="myChart"></canvas>
