@@ -156,7 +156,7 @@
           <article class="bg-slate-50 rounded-3xl w-200 p-8 px-32 flex flex-col gap-4">
             <span class="flex flex-col justify-center items-center gap-4">
               <img class="h-20 w-20" src="assets/icon.svg" alt="">
-              <h1 class="font-bold text-2xl text-center text-slate-950">Откройте брокерский счёт</h1>
+              <h1 class="font-bold text-2xl text-center text-slate-950">Брокерский счёт <p class="text-blue-500">Blueberry Bank</p></h1>
               <p class="text-slate-700 text-center">Откройте бесплатный счёт и начните зарабатывать на ценных бумагах</p>
             </span>
 

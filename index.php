@@ -58,7 +58,7 @@
                         Если ошибка повторится, позвоните нам: <br>
                         8 800 555 35 35
                     </p>
-                    <p class="text-slate-500 text-center">Код ошибки: <?php echo $db_error ?></p>
+                    <p class="text-slate-500 text-center">Ошибка: <?php echo $db_error ?></p>
                     <a class="cursor-pointer text-slate-700 bg-slate-200/50 p-4 text-center rounded-2xl
                     hover:bg-blue-200/50 hover:text-blue-500" 
                     onclick="javascript: window.location.reload()">Попробовать ещё раз</a>

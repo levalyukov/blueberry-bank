@@ -18,6 +18,8 @@
 
     function open_investment_account(): bool
     {
-        
+        global $conn;
+
+        return false;
     }
 ?>
