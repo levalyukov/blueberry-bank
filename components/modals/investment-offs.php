@@ -1,5 +1,9 @@
+<?php
+  require_once("include/dashboard.php");
+?>
+
 <div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center items-center">
-  <div class="w-150 h-150 bg-slate-50 m-5 rounded-xl shadow-md">
+  <div class="w-150 bg-slate-50 m-5 rounded-xl shadow-md">
     <header class="p-2 flex justify-end">
       <a href="index.php?page=investment" class="flex h-8 w-8 justify-center items-center text-slate-700 
       hover:text-slate-50 hover:bg-red-400 rounded-lg">
@@ -7,10 +11,18 @@
       </a>
     </header>
 
-    <div class="flex flex-col px-8 gap-6 overflow-y-scroll h-[calc(100%-64px)] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-      <h1 class="font-bold text-3xl text-slate-950">Вывол денег</h1>
+    <div class="flex flex-col p-8 gap-6 overflow-y-scroll h-[calc(100%-64px)] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <h1 class="font-bold text-3xl text-slate-950">Вывод денег</h1>
+
+      <?php if (isset($_SESSION["investment-account-offs"])): ?>
+        <div class="w-full bg-red-500/25 p-4 rounded-xl border-1 border-red-500 text-red-950">
+          <?= $_SESSION["investment-account-offs"] ?>
+          <?php unset($_SESSION["investment-account-offs"]) ?>
+        </div>
+      <?php endif ?>
+
       <div class="flex flex-col">
-        <form action="" class="flex flex-col gap-6 h-full">
+        <form action="include/investment-account-offs.php" method="POST" class="flex flex-col gap-6 h-full">
           <span class="flex flex-col gap-2">
             <label class="font-bold text-slate-950 text-lg" for="">Откуда</label>
             <el-select id="select" name="selected" value="1" class="w-full">
@@ -26,7 +38,7 @@
                 <el-option value="1" class="group/option relative block cursor-default py-4 pr-9 pl-4 text-white select-none cursor-pointer focus:text-white focus:outline-hidden">
                   <div class="flex flex-col w-full">
                     <span class="text-left text-slate-700 text-sm">Брокерский счет: 10123456-789</span>
-                    <span class="font-bold text-left text-slate-950">4 123 012,23 ₽</span>
+                    <span class="font-bold text-left text-slate-950"><?= number_format(get_investment_account($role["client_id"]), 2, ',', ' ') ?> ₽</span>
                   </div>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-500 group-not-aria-selected/option:hidden group-focus/option:text-blue-500 in-[el-selectedcontent]:hidden">
                     <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
@@ -53,7 +65,7 @@
                 <el-option value="1" class="group/option relative block cursor-default py-4 pr-9 pl-4 text-white select-none cursor-pointer focus:text-white focus:outline-hidden">
                   <div class="flex flex-col w-full">
                     <span class="text-left text-slate-700 text-sm">Текущий счёт **** 4567</span>
-                    <span class="font-bold text-left text-slate-950">52 630 401,58 ₽</span>
+                    <span class="font-bold text-left text-slate-950"><?= number_format(get_user_balance($role["client_id"]), 2, ',', ' ') ?> ₽</span>
                   </div>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-500 group-not-aria-selected/option:hidden group-focus/option:text-blue-500 in-[el-selectedcontent]:hidden">
                     <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
@@ -69,13 +81,13 @@
             <label class="font-bold text-slate-950 text-lg" for="">Сумма</label>
             <input type="number" class="p-4 bg-slate-100 outline-none border-1 border-slate-600 rounded-lg 
             hover:border-blue-500 hover:bg-blue-100 cursor-pointer placeholder:text-state-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            placeholder="0 ₽">
+            placeholder="0 ₽" name="offs-value">
           </span>
 
-          <a class="w-full text-slate-950 bg-slate-300/50 cursor-pointer text-center gap-2 p-4 
+          <button type="submit" class="w-full text-slate-950 bg-slate-300/50 cursor-pointer text-center gap-2 p-4 
           hover:bg-blue-100 hover:text-blue-500 rounded-xl mt-auto">
             Вывести
-          </a>
+          </button>
         </form>
       </div>
     </div>

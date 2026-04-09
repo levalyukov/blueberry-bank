@@ -5,67 +5,49 @@
     function get_all_stocks(): array
     {
         global $conn;
+        $result = [];
 
-        if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
-            create_securities();
-            init_stocks();
-        }
+        $stmt = $conn->prepare("SELECT * FROM securities WHERE type = 'stocks'");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all();
 
-        return [];
+        return $result;
     }
 
     function get_all_bonds(): array
     {
         global $conn;
+        $result = [];
 
-        if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
-              create_securities();
-              init_bonds();
-        }
+        $stmt = $conn->prepare("SELECT * FROM securities WHERE type = 'bonds'");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all();
 
-        return [];
+        return $result;
     }
 
     function get_all_currency(): array
     {
         global $conn;
+        $result = [];
 
-        if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
-            create_securities();
-            init_currency();
-        }
+        $stmt = $conn->prepare("SELECT * FROM securities WHERE type = 'currency'");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all();
 
-        return [];
+        return $result;
     }
 
     function get_all_metals(): array
     {
         global $conn;
+        $result = [];
 
-        if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
-            create_securities();
-            init_metals();
-        }
+        $stmt = $conn->prepare("SELECT * FROM securities WHERE type = 'metals'");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all();
 
-        return [];
+        return $result;
     }
 
-
-
-    function init_stocks() : void 
-    {
-        
-    }
-    function init_bonds() : void 
-    {
-
-    }
-    function init_currency() : void 
-    {
-
-    }
-    function init_metals() : void 
-    {
-
-    }
 ?>
