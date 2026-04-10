@@ -11,7 +11,7 @@
     $metals = get_all_metals();
 ?>
 
-<div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center ">
+<div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center">
   <div class="w-300 h-[calc(100% - 5)] bg-slate-50 m-5 rounded-xl shadow-md">
     <header class="p-2 flex justify-end">
       <a href="index.php?page=investment" class="flex h-8 w-8 justify-center items-center text-slate-700 
@@ -27,7 +27,7 @@
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Акции</h1>
           <?php for ($i = 1; $i < count($stocks); $i++): ?>
-          <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $stocks[$i][6] ?>" alt="">
               <span class="flex flex-col">
@@ -40,14 +40,14 @@
               <p class="text-slate-950"><?php echo number_format($stocks[$i][4], 2, ',', ' ');  ?> ₽</p>
               <p class="text-green-500">+0,15 ₽ (0,48 %)</p>
             </span>
-          </article>
+          </a>
           <?php endfor ?>
         </div>
 
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Облигации</h1>
           <?php for ($i = 0; $i < count($bonds); $i++): ?>
-          <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $bonds[$i][6] ?>" alt="">
               <span class="flex flex-col">
@@ -60,7 +60,7 @@
               <p class="text-slate-950"><?php echo number_format($bonds[$i][4], 2, ',', ' ');  ?> ₽</p>
               <p class="text-green-500">+17,48 %</p>
             </span>
-          </article>
+          </a>
           <?php endfor ?>
         </div>
       </section>
@@ -69,39 +69,39 @@
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Валюта</h1>
           <?php for ($i = 0; $i < count($currency); $i++): ?>
-          <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
-              <img class="w-12 h-12 rounded-xl object-cover" src="assets/flags/US.svg" alt="">
+              <img class="w-12 h-12 rounded-xl object-cover" src="<?= $currency[$i][6] ?>" alt="">
               <span class="flex flex-col">
-                <h1 class="font-bold text-slate-950">Американский Доллар</h1>
-                <p class="text-slate-500">USD</p>
+                <h1 class="font-bold text-slate-950 capitalize"><?= $currency[$i][2] ?></h1>
+                <p class="text-slate-500"><?= $currency[$i][1] ?></p>
               </span>
             </span>
 
             <span class="flex flex-col text-right">
-              <p class="text-slate-950"><?php echo number_format(81.62	, 2, ',', ' ');  ?> ₽</p>
-              <p class="text-green-500">+0,32 ₽ (0,40 %)</p>
+              <p class="text-slate-950"><?php echo number_format($currency[$i][4], 2, ',', ' ');  ?> ₽</p>
+              <!-- <p class="text-green-500">+0,32 ₽ (0,40 %)</p> -->
             </span>
-          </article>
+          </a>
           <?php endfor ?>
         </div>
 
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Драгоценные металлы</h1>
           <?php for ($i = 0; $i < count($metals); $i++): ?>
-          <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
-              <img class="w-12 h-12 rounded-xl object-cover" src="https://alfaonline.servicecdn.ru/public/s3/static/investment/img_gold_bar.png" alt="">
+              <img class="w-12 h-12 rounded-xl object-cover" src="<?= $metals[$i][6] ?>" alt="">
               <span class="flex flex-col">
-                <h1 class="font-bold text-slate-950">Золото</h1>
-                <p class="text-slate-500">Au</p>
+                <h1 class="font-bold text-slate-950"><?= $metals[$i][2] ?></h1>
+                <p class="text-slate-500"><?= $metals[$i][1] ?></p>
               </span>
             </span>
 
             <span class="flex flex-col text-right">
-              <p class="text-slate-950"><?php echo number_format(11737.29, 2, ',', ' ');  ?> ₽</p>
+              <p class="text-slate-950"><?php echo number_format($metals[$i][4], 2, ',', ' ');  ?> ₽</p>
             </span>
-          </article>
+          </a>
           <?php endfor ?>
         </div>
       </section>

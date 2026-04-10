@@ -26,6 +26,10 @@
     case "history":
       include_once("modals/investment-history.php");
       break;
+
+    case "buy":
+      include_once("modals/investment-buy.php");
+      break;
   };
 ?>
 

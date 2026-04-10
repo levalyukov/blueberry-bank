@@ -61,13 +61,9 @@
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('TATN', 'Татнефть', 10.32, 620.41, 'https://s3-symbol-logo.tradingview.com/tatneft--big.svg')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('SNGS', 'Сургутнефтегаз ', 2.15, 39.83, 'https://s3-symbol-logo.tradingview.com/surgutneftegas--big.svg')");
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('NVTK', 'НОВАТЭК', 10, 1281.42, 'https://s3-symbol-logo.tradingview.com/novatek--big.svg')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('PLZL', 'Полюс', 10, 2271, 'https://s3-symbol-logo.tradingview.com/polyus--big.svg')");
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('GMKN', 'Норникель', 10, 148.80, 'https://s3-symbol-logo.tradingview.com/norilsk--big.svg')");
 
         // IT / big-tech
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
@@ -75,39 +71,86 @@
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('YDEX', 'Яндекс', 3.84, 4221.12, 'https://platforms.su/storage/product-logo/1755356939_0OOA8Yq7QF.png')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('DIAS', 'Диасофт', 2,75, 1553.34, 'https://s3-symbol-logo.tradingview.com/diasoft--big.svg')");
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('IVAT', 'ИВА', 32.23, 150.53, 'https://s3-symbol-logo.tradingview.com/pjsc-iva--big.svg')");
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('VKCO', 'ВК', 53.23, 270.02, 'https://s3-symbol-logo.tradingview.com/mail-ru-group--big.svg')");
 
         // Supermarkets
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('X5', 'Икс 5', 10, 2500.36, 'https://s3-symbol-logo.tradingview.com/x5-corporate-center--big.svg')");
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('MGNT', 'Магнит', 10, 3000.52, 'https://s3-symbol-logo.tradingview.com/magnit--big.svg')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
         VALUES ('LENT', 'Лента', 10, 2000.67, 'https://s3-symbol-logo.tradingview.com/lenta--big.svg')");
-
-        // Others
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('WUSH', 'ВУШ', 10, 80.34, 'https://s3-symbol-logo.tradingview.com/whoosh--big.svg')");
-        $conn->query("INSERT INTO securities (symbol, name, volatility, price, image) 
-        VALUES ('GCHE', 'Черкизово', 13.12, 3512.72, 'https://porti.ru/resource/img/company/logo/166.png')");
     }
     function init_bonds() : void 
     {
         global $conn;
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', 'https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
+
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
+        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
     }
     function init_currency() : void 
     {
+        global $conn;
 
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('CNY', 'Китайский юань', 13.12, 32.72, 'currency', 'assets/flags/CN.svg')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('USD', 'Американский Доллар', 13.12, 52.72, 'currency', 'assets/flags/US.svg')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('EUR', 'Евро', 13.12, 52.72, 'currency', 'assets/flags/EU.svg')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('UAH ', 'Украинская гривна', 13.12, 0.17, 'currency', 'assets/flags/UA.svg')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('KRW', 'Южнокорейская вона', 13.12, 22.72, 'currency', 'assets/flags/KR.svg')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('PLN', 'Польский злотый', 13.12, 20.72, 'currency', 'assets/flags/PL.svg')");
     }
     function init_metals() : void 
     {
+        global $conn;
 
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('Au', 'Золото', 13.12, 3512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_gold_bar.png')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('Ag', 'Серебро', 13.12, 3512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_silver_bar.png')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('Pl', 'Платина', 13.12, 3512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_platinum_bar.png')");
+        $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
+        VALUES ('U', 'Уран', 13.12, 37865512.72, 'metals', 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQNHnFrL7AuYZFVdYD5upBht_pNxnd6s141Br09iFkIGUi5IBe9K1DP-p0kk3qMY95pmK4eyT-d9EWy2X3p')");
     }
 ?>
