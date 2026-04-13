@@ -26,7 +26,7 @@
       <section class="flex gap-10">
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Акции</h1>
-          <?php for ($i = 1; $i < count($stocks); $i++): ?>
+          <?php for ($i = 0; $i < count($stocks); $i++): ?>
           <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $stocks[$i][6] ?>" alt="">
