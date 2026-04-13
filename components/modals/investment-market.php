@@ -27,7 +27,7 @@
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Акции</h1>
           <?php for ($i = 0; $i < count($stocks); $i++): ?>
-          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy&type=stocks&id=<?= $stocks[$i][0] ?>"class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $stocks[$i][6] ?>" alt="">
               <span class="flex flex-col">
@@ -47,7 +47,7 @@
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Облигации</h1>
           <?php for ($i = 0; $i < count($bonds); $i++): ?>
-          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy&type=bonds&id=<?= $bonds[$i][0] ?>" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $bonds[$i][6] ?>" alt="">
               <span class="flex flex-col">
@@ -69,7 +69,7 @@
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Валюта</h1>
           <?php for ($i = 0; $i < count($currency); $i++): ?>
-          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy&type=currency&id=<?= $currency[$i][0] ?>" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $currency[$i][6] ?>" alt="">
               <span class="flex flex-col">
@@ -89,7 +89,7 @@
         <div class="flex flex-col w-full gap-2">
           <h1 class="uppercase text-slate-400 mb-2">Драгоценные металлы</h1>
           <?php for ($i = 0; $i < count($metals); $i++): ?>
-          <a href="index.php?page=investment&action=buy" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+          <a href="index.php?page=investment&action=buy&type=metals&id=<?= $metals[$i][0] ?>" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
             <span class="flex gap-4 items-center">
               <img class="w-12 h-12 rounded-xl object-cover" src="<?= $metals[$i][6] ?>" alt="">
               <span class="flex flex-col">

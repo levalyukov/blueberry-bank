@@ -2,7 +2,7 @@
   session_start();
   require_once("db.php");
 
-  function get_user_last_history(int $client_id): array
+  function get_user_last_history(int $client_id) : array
   {
     global $conn;
     $result = [];

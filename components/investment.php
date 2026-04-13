@@ -7,6 +7,12 @@
 <?php 
   $action = $_GET["action"] ?? "";
   require_once("include/investment.php"); 
+
+  $portfolio = get_investment_portfolio($role["client_id"]);
+  $stocks = get_invenstment_stocks($role["client_id"]);
+  $bonds = get_invenstment_bonds($role["client_id"]);
+  $currency = get_invenstment_currency($role["client_id"]);
+  $metals = get_invenstment_metals($role["client_id"]);
 ?>
 
 <?php 
@@ -29,6 +35,10 @@
 
     case "buy":
       include_once("modals/investment-buy.php");
+      break;
+
+    case "sell":
+      include_once("modals/investment-sell.php");
       break;
   };
 ?>
@@ -54,48 +64,22 @@
       <div class="flex h-75 gap-6">
         <article class="bg-slate-50 rounded-3xl p-8 flex flex-col gap-2 w-full">
           <p class="text-slate-400 uppercase py-1">Брокерский счет: 10123456-789</p>
-          <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_investment_account($role["client_id"]), 2, ',', ' ') ?> ₽</h1>
-          <span class="flex gap-1.5">
-            <p class="<?php
-              if (get_investment_profit_value($role["client_id"]) > 0.00) {
-                echo 'text-green-500';
-              } else if (get_investment_profit_value($role["client_id"]) == 0.0) {
-                echo 'text-slate-700';
-              } else {
-                echo 'text-red-500';
-              }
-            ?>">
-              <?php if (get_investment_profit_value($role["client_id"]) > 0.0) {
-                echo '+';
-              } else if (get_investment_profit_value($role["client_id"]) < 0.0) {
-                echo ' ';
-              } else {
-                echo '';
-              } ?><?= number_format(get_investment_profit_value($role["client_id"]), 2, ',', ' ') ?> ₽ 
-              (<?php if (get_investment_profit_value($role["client_id"]) > 0.0) {
-                echo '+';
-              } else if (get_investment_profit_value($role["client_id"]) < 0.0) {
-                echo ' ';
-              } else {
-                echo '';
-              } ?><?= number_format(get_investment_profit_percent($role["client_id"]), 2, ',', ' ') ?> %)
-            </p>
-            <p class="text-slate-700">за сегодня</p>
+          <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_investment_balance($role["client_id"]), 2, ',', ' ') ?> ₽</h1>
           </span>
 
           <div class="flex flex-col gap-2 mt-auto">
             <span class="flex gap-2">
-              <a class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center
+              <a class="cursor-pointer py-4 rounded-xl text-slate-700 bg-slate-200 w-full text-center
               hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=refill">
                 Пополнить
               </a>
 
-              <a class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center
+              <a class="cursor-pointer py-4 rounded-xl text-slate-700 bg-slate-200 w-full text-center
               hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=offs">
                 Вывести
               </a>
 
-              <a class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center
+              <a class="cursor-pointer py-4 rounded-xl text-slate-700 bg-slate-200 w-full text-center
               hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=history">
                 История
               </a>
@@ -119,28 +103,167 @@
       <article class="bg-slate-50 rounded-3xl p-8 flex flex-col gap-2">
         <h1 class="text-slate-400 uppercase">Портфель</h1>
         <section class="grid grid-cols-2 gap-6">
+            <?php if (count($stocks) > 0): ?>
+            <div class="flex flex-col mt-2 gap-4">
+                <h1 class="text-xl font-bold text-slate-950 mb-2 flex gap-1 items-center ">Акции</h1>
+                <div class="grid grid-cols-2 gap-2"> 
+                    <?php for ($i = 0; $i < count($stocks); $i++): ?>
 
-          <!-- <div class="flex flex-col mt-2 gap-4">
-            <h1 class="text-xl font-bold text-slate-950 mb-2 flex gap-1 items-center ">Акции</h1>
-            <div class="grid grid-cols-2 gap-2">
-              <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
-                <span class="flex gap-4 items-center">
-                  <img class="object-cover w-16 h-16 rounded-2xl" src="https://s3-symbol-logo.tradingview.com/sberbank--600.png" alt="">
-                  <span class="flex flex-col">
-                    <h1 class="font-bold text-slate-950">Сбербанк</h1>
-                    <p class="text-slate-700">123 шт.</p>
-                    <p class="text-slate-700">321,12 ₽ → 521,8 ₽</p>
-                  </span>
-                </span>
+                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                        <span class="flex gap-4 items-center">
+                        <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($stocks[$i][2]) ?>" alt="">
+                        <span class="flex flex-col">
+                            <h1 class="font-bold text-slate-950 text-sm"><?= get_name($stocks[$i][2]) ?></h1>
+                            <p class="text-slate-700 text-sm"><?= $stocks[$i][5] ?> шт.</p>
+                            <p class="text-slate-700 text-sm"><?= number_format($stocks[$i][3],2,',',' ') ?> ₽ → <?= number_format($stocks[$i][4],2,',',' ') ?> ₽</p>
+                        </span>
+                        </span>
 
-                <span class="flex flex-col text-right">
-                  <p class="text-slate-950"><?php echo number_format(314.23*123, 2, ',', ' ');  ?> ₽</p>
-                  <p class="text-green-500">+0,48 %</p>
-                  <p class="text-green-500">+0,15 ₽</p>
-                </span>
-              </article>
+                        <span class="flex flex-col text-right">
+                        <p class="text-slate-950 text-sm"><?php echo number_format($stocks[$i][3]*$stocks[$i][5], 2, ',', ' ');  ?> ₽</p>
+
+                        <p class="
+                        
+                        <?php 
+                            if (abs(get_investment_profit_percent($role["client_id"], $stocks[$i][0])) < 0.0) {
+                              echo 'text-red-500';
+                            } else if (abs(get_investment_profit_percent($role["client_id"], $stocks[$i][0])) > 0.0) {
+                              echo 'text-green-500';
+                            } else {
+                              echo 'text-slate-500';
+                            }
+                        ?>
+                        
+                        text-sm">
+                          <?php
+
+                            if (abs(get_investment_profit_percent($role["client_id"], $stocks[$i][0])) < 0.0) {
+                              echo ' ';
+                            } else if (abs(get_investment_profit_percent($role["client_id"], $stocks[$i][0])) > 0.0) {
+                              echo '+';
+                            } else {
+                              echo ' ';
+                            }
+                          
+                          ?><?= number_format(get_investment_profit_percent($role["client_id"], $stocks[$i][0]),2,',',' ') ?> %
+                        </p>
+
+                        <p class="
+                        
+                        <?php 
+                            if (abs(get_investment_profit_value($role["client_id"], $stocks[$i][0])) < 0.0) {
+                              echo 'text-red-500';
+                            } else if (abs(get_investment_profit_value($role["client_id"], $stocks[$i][0])) > 0.0) {
+                              echo 'text-green-500';
+                            } else {
+                              echo 'text-slate-500';
+                            }
+                        ?>
+                        
+                        text-sm">
+                          <?php
+
+                            if (abs(get_investment_profit_value($role["client_id"], $stocks[$i][0])) < 0.0) {
+                              echo ' ';
+                            } else if (abs(get_investment_profit_value($role["client_id"], $stocks[$i][0])) > 0.0) {
+                              echo '+';
+                            } else {
+                              echo ' ';
+                            }
+                          
+                          ?><?= number_format(get_investment_profit_value($role["client_id"], $stocks[$i][0]),2,',',' ') ?> ₽
+                        </p>
+                        </span>
+                    </article>
+
+                    <?php endfor ?>
+                </div>
             </div>
-          </div> -->
+            <?php endif ?>
+
+            <?php if (count($bonds) > 0): ?>
+            <div class="flex flex-col mt-2 gap-4">
+                <h1 class="text-xl font-bold text-slate-950 mb-2 flex gap-1 items-center ">Облигации</h1>
+                <div class="grid grid-cols-2 gap-2"> 
+                    <?php for ($i = 0; $i < count($bonds); $i++): ?>
+
+                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                        <span class="flex gap-4 items-center">
+                        <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($bonds[$i][2]) ?>" alt="">
+                        <span class="flex flex-col">
+                            <h1 class="font-bold text-slate-950 text-sm"><?= get_name($bonds[$i][2]) ?></h1>
+                            <p class="text-slate-700 text-sm"><?= $bonds[$i][4] ?> шт.</p>
+                            <p class="text-slate-700 text-sm">321,12 ₽ → 521,8 ₽</p>
+                        </span>
+                        </span>
+
+                        <span class="flex flex-col text-right">
+                        <p class="text-slate-950 text-sm"><?php echo number_format($bonds[$i][3]*$bonds[$i][4], 2, ',', ' ');  ?> ₽</p>
+                        <p class="text-green-500 text-sm">+0,48 %</p>
+                        <p class="text-green-500 text-sm">+0,15 ₽</p>
+                        </span>
+                    </article>
+
+                    <?php endfor ?>
+                </div>
+            </div>
+            <?php endif ?>
+
+            <?php if (count($currency) > 0): ?>
+            <div class="flex flex-col mt-2 gap-4">
+                <h1 class="text-xl font-bold text-slate-950 mb-2 flex gap-1 items-center ">Валюта</h1>
+                <div class="grid grid-cols-2 gap-2"> 
+                    <?php for ($i = 0; $i < count($currency); $i++): ?>
+
+                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                        <span class="flex gap-4 items-center">
+                        <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($currency[$i][2]) ?>" alt="">
+                        <span class="flex flex-col">
+                            <h1 class="text-sm font-bold text-slate-950"><?= get_name($currency[$i][2]) ?></h1>
+                            <p class="text-sm text-slate-700"><?= $currency[$i][4] ?> шт.</p>
+                            <p class="text-sm text-slate-700">321,12 ₽ → 521,8 ₽</p>
+                        </span>
+                        </span>
+
+                        <span class="flex flex-col text-right">
+                        <p class="text-slate-950 text-sm"><?php echo number_format($currency[$i][3]*$currency[$i][4], 2, ',', ' ');  ?> ₽</p>
+                        <p class="text-green-500 text-sm">+0,48 %</p>
+                        <p class="text-green-500 text-sm">+0,15 ₽</p>
+                        </span>
+                    </article>
+
+                    <?php endfor ?>
+                </div>
+            </div>
+            <?php endif ?>
+
+            <?php if (count($metals) > 0): ?>
+            <div class="flex flex-col mt-2 gap-4">
+                <h1 class="text-xl font-bold text-slate-950 mb-2 flex gap-1 items-center ">Драгоценный металлы</h1>
+                <div class="grid grid-cols-2 gap-2"> 
+                    <?php for ($i = 0; $i < count($metals); $i++): ?>
+
+                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                        <span class="flex gap-4 items-center">
+                        <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($metals[$i][2]) ?>" alt="">
+                        <span class="flex flex-col">
+                            <h1 class="font-bold text-slate-950 text-sm"><?= get_name($metals[$i][2]) ?></h1>
+                            <p class="text-slate-700 text-sm"><?= $metals[$i][4] ?> шт.</p>
+                            <p class="text-slate-700 text-sm">321,12 ₽ → 521,8 ₽</p>
+                        </span>
+                        </span>
+
+                        <span class="flex flex-col text-right">
+                        <p class="text-slate-950 text-sm"><?php echo number_format($metals[$i][3]*$metals[$i][4], 2, ',', ' ');  ?> ₽</p>
+                        <p class="text-green-500 text-sm">+0,48 %</p>
+                        <p class="text-green-500 text-sm">+0,15 ₽</p>
+                        </span>
+                    </article>
+
+                    <?php endfor ?>
+                </div>
+            </div>
+            <?php endif ?>
 
         </section>
       </article>

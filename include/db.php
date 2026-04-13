@@ -30,11 +30,27 @@
         )")) {
             $db_error = "Ошибка создания базы данных для ценных бумаг.";
         } else {
+            init_portfolio();
             init_stocks();
             init_bonds();
             init_currency();
             init_metals();
         }
+    }
+
+    function init_portfolio() : void
+    {
+        global $conn;
+
+        $conn->query("CREATE TABLE `portfolio` (
+            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `user_id` INT NOT NULL,
+            `securities_id` INT NOT NULL,
+            `new_price` DECIMAL(10,2) NOT NULL,
+            `old_price` DECIMAL(10,2) NOT NULL,
+            `amount` INT NOT NULL,
+            `type` ENUM('stocks','bonds','currency','metals') DEFAULT 'stocks'
+        )");
     }
 
     function init_stocks() : void 
@@ -84,43 +100,43 @@
         global $conn;
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image, coupon_rate, face_value) 
-        VALUES ('RU000A1038V6', 'ОФЗ 26238 (Гос. облигация РФ)', 2.15, 675.50, 'bonds', '
+        VALUES ('RU000A1038V6', 'ОФЗ 26238', 2.15, 675.50, 'bonds', '
         https://aic.ru/img/1c2b55ff-645e-45fa-b7cf-b55400e19410/gerbpic2.png?fm=jpg&q=80&fit=max&crop=1408%2C1400%2C0%2C0', 7.10 ,1000.00)");
     }
     function init_currency() : void 
@@ -145,12 +161,12 @@
         global $conn;
 
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
-        VALUES ('Au', 'Золото', 13.12, 3512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_gold_bar.png')");
+        VALUES ('Au', 'Золото', 13.12, 11512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_gold_bar.png')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
-        VALUES ('Ag', 'Серебро', 13.12, 3512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_silver_bar.png')");
+        VALUES ('Ag', 'Серебро', 13.12, 5703.65, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_silver_bar.png')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
-        VALUES ('Pl', 'Платина', 13.12, 3512.72, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_platinum_bar.png')");
+        VALUES ('Pl', 'Платина', 13.12, 4835.85, 'metals', 'https://alfaonline.servicecdn.ru/public/s3/static/investment/img_platinum_bar.png')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
-        VALUES ('U', 'Уран', 13.12, 37865512.72, 'metals', 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQNHnFrL7AuYZFVdYD5upBht_pNxnd6s141Br09iFkIGUi5IBe9K1DP-p0kk3qMY95pmK4eyT-d9EWy2X3p')");
+        VALUES ('U', 'Уран', 13.12, 378655.72, 'metals', 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQNHnFrL7AuYZFVdYD5upBht_pNxnd6s141Br09iFkIGUi5IBe9K1DP-p0kk3qMY95pmK4eyT-d9EWy2X3p')");
     }
 ?>

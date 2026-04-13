@@ -2,7 +2,7 @@
     session_start();
     require_once("db.php");
 
-    function get_all_stocks(): array
+    function get_all_stocks() : array
     {
         global $conn;
         $result = [];
@@ -14,7 +14,7 @@
         return $result;
     }
 
-    function get_all_bonds(): array
+    function get_all_bonds() : array
     {
         global $conn;
         $result = [];
@@ -26,7 +26,7 @@
         return $result;
     }
 
-    function get_all_currency(): array
+    function get_all_currency() : array
     {
         global $conn;
         $result = [];
@@ -38,7 +38,7 @@
         return $result;
     }
 
-    function get_all_metals(): array
+    function get_all_metals() : array
     {
         global $conn;
         $result = [];
