@@ -109,11 +109,11 @@
                 <div class="grid grid-cols-2 gap-2"> 
                     <?php for ($i = 0; $i < count($stocks); $i++): ?>
 
-                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                    <a href="index.php?page=investment&action=sell&type=stocks&id=<?= $stocks[$i][2] ?>" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                         <span class="flex gap-4 items-center">
                         <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($stocks[$i][2]) ?>" alt="">
                         <span class="flex flex-col">
-                            <h1 class="font-bold text-slate-950 text-sm"><?= get_name($stocks[$i][2]) ?></h1>
+                            <h1 class="font-bold text-slate-950 text-sm capitalize capitalize"><?= get_name($stocks[$i][2]) ?></h1>
                             <p class="text-slate-700 text-sm"><?= $stocks[$i][5] ?> шт.</p>
                             <p class="text-slate-700 text-sm"><?= number_format($stocks[$i][3],2,',',' ') ?> ₽ → <?= number_format($stocks[$i][4],2,',',' ') ?> ₽</p>
                         </span>
@@ -174,7 +174,7 @@
                           ?><?= number_format(get_investment_profit_value($role["client_id"], $stocks[$i][0]),2,',',' ') ?> ₽
                         </p>
                         </span>
-                    </article>
+                    </a>
 
                     <?php endfor ?>
                 </div>
@@ -187,22 +187,72 @@
                 <div class="grid grid-cols-2 gap-2"> 
                     <?php for ($i = 0; $i < count($bonds); $i++): ?>
 
-                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                    <a href="index.php?page=investment&action=sell&type=bonds&id=<?= $bonds[$i][2] ?>" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                         <span class="flex gap-4 items-center">
                         <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($bonds[$i][2]) ?>" alt="">
                         <span class="flex flex-col">
-                            <h1 class="font-bold text-slate-950 text-sm"><?= get_name($bonds[$i][2]) ?></h1>
-                            <p class="text-slate-700 text-sm"><?= $bonds[$i][4] ?> шт.</p>
-                            <p class="text-slate-700 text-sm">321,12 ₽ → 521,8 ₽</p>
+                            <h1 class="font-bold text-slate-950 text-sm capitalize"><?= get_name($bonds[$i][2]) ?></h1>
+                            <p class="text-slate-700 text-sm"><?= $bonds[$i][5] ?> шт.</p>
+                            <p class="text-slate-700 text-sm"><?= number_format($bonds[$i][3],2,',',' ') ?> ₽ → <?= number_format($bonds[$i][4],2,',',' ') ?> ₽</p>
                         </span>
                         </span>
 
                         <span class="flex flex-col text-right">
-                        <p class="text-slate-950 text-sm"><?php echo number_format($bonds[$i][3]*$bonds[$i][4], 2, ',', ' ');  ?> ₽</p>
-                        <p class="text-green-500 text-sm">+0,48 %</p>
-                        <p class="text-green-500 text-sm">+0,15 ₽</p>
+                          <p class="text-slate-950 text-sm"><?php echo number_format($bonds[$i][3]*$bonds[$i][5], 2, ',', ' ');  ?> ₽</p>
+
+                          <p class="
+                          
+                          <?php 
+                              if (abs(get_investment_profit_percent($role["client_id"], $bonds[$i][0])) < 0.0) {
+                                echo 'text-red-500';
+                              } else if (abs(get_investment_profit_percent($role["client_id"], $bonds[$i][0])) > 0.0) {
+                                echo 'text-green-500';
+                              } else {
+                                echo 'text-slate-500';
+                              }
+                          ?>
+                          
+                          text-sm">
+                            <?php
+
+                              if (abs(get_investment_profit_percent($role["client_id"], $bonds[$i][0])) < 0.0) {
+                                echo ' ';
+                              } else if (abs(get_investment_profit_percent($role["client_id"], $bonds[$i][0])) > 0.0) {
+                                echo '+';
+                              } else {
+                                echo ' ';
+                              }
+                            
+                            ?><?= number_format(get_investment_profit_percent($role["client_id"], $bonds[$i][0]),2,',',' ') ?> %
+                          </p>
+
+                          <p class="
+                          
+                          <?php 
+                              if (abs(get_investment_profit_value($role["client_id"], $bonds[$i][0])) < 0.0) {
+                                echo 'text-red-500';
+                              } else if (abs(get_investment_profit_value($role["client_id"], $bonds[$i][0])) > 0.0) {
+                                echo 'text-green-500';
+                              } else {
+                                echo 'text-slate-500';
+                              }
+                          ?>
+                          
+                          text-sm">
+                            <?php
+
+                              if (abs(get_investment_profit_value($role["client_id"], $bonds[$i][0])) < 0.0) {
+                                echo ' ';
+                              } else if (abs(get_investment_profit_value($role["client_id"], $bonds[$i][0])) > 0.0) {
+                                echo '+';
+                              } else {
+                                echo ' ';
+                              }
+                            
+                            ?><?= number_format(get_investment_profit_value($role["client_id"], $bonds[$i][0]),2,',',' ') ?> ₽
+                          </p>
                         </span>
-                    </article>
+                    </a>
 
                     <?php endfor ?>
                 </div>
@@ -215,22 +265,72 @@
                 <div class="grid grid-cols-2 gap-2"> 
                     <?php for ($i = 0; $i < count($currency); $i++): ?>
 
-                    <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
+                    <a href="index.php?page=investment&action=sell&type=currency&id=<?= $currency[$i][2] ?>" class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                         <span class="flex gap-4 items-center">
                         <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($currency[$i][2]) ?>" alt="">
                         <span class="flex flex-col">
-                            <h1 class="text-sm font-bold text-slate-950"><?= get_name($currency[$i][2]) ?></h1>
-                            <p class="text-sm text-slate-700"><?= $currency[$i][4] ?> шт.</p>
-                            <p class="text-sm text-slate-700">321,12 ₽ → 521,8 ₽</p>
+                            <h1 class="text-sm font-bold text-slate-950 capitalize"><?= get_name($currency[$i][2]) ?></h1>
+                            <p class="text-sm text-slate-700"><?= $currency[$i][5] ?> шт.</p>
+                            <p class="text-sm text-slate-700"><?= number_format($currency[$i][3],2,',',' ') ?> ₽ → <?= number_format($currency[$i][4],2,',',' ') ?> ₽</p>
                         </span>
                         </span>
 
                         <span class="flex flex-col text-right">
-                        <p class="text-slate-950 text-sm"><?php echo number_format($currency[$i][3]*$currency[$i][4], 2, ',', ' ');  ?> ₽</p>
-                        <p class="text-green-500 text-sm">+0,48 %</p>
-                        <p class="text-green-500 text-sm">+0,15 ₽</p>
+                          <p class="text-slate-950 text-sm"><?php echo number_format($currency[$i][3]*$currency[$i][5], 2, ',', ' ');  ?> ₽</p>
+
+                          <p class="
+                          
+                          <?php 
+                              if (abs(get_investment_profit_percent($role["client_id"], $currency[$i][0])) < 0.0) {
+                                echo 'text-red-500';
+                              } else if (abs(get_investment_profit_percent($role["client_id"], $currency[$i][0])) > 0.0) {
+                                echo 'text-green-500';
+                              } else {
+                                echo 'text-slate-500';
+                              }
+                          ?>
+                          
+                          text-sm">
+                            <?php
+
+                              if (abs(get_investment_profit_percent($role["client_id"], $currency[$i][0])) < 0.0) {
+                                echo ' ';
+                              } else if (abs(get_investment_profit_percent($role["client_id"], $currency[$i][0])) > 0.0) {
+                                echo '+';
+                              } else {
+                                echo ' ';
+                              }
+                            
+                            ?><?= number_format(get_investment_profit_percent($role["client_id"], $currency[$i][0]),2,',',' ') ?> %
+                          </p>
+
+                          <p class="
+                          
+                          <?php 
+                              if (abs(get_investment_profit_value($role["client_id"], $currency[$i][0])) < 0.0) {
+                                echo 'text-red-500';
+                              } else if (abs(get_investment_profit_value($role["client_id"], $currency[$i][0])) > 0.0) {
+                                echo 'text-green-500';
+                              } else {
+                                echo 'text-slate-500';
+                              }
+                          ?>
+                          
+                          text-sm">
+                            <?php
+
+                              if (abs(get_investment_profit_value($role["client_id"], $currency[$i][0])) < 0.0) {
+                                echo ' ';
+                              } else if (abs(get_investment_profit_value($role["client_id"], $currency[$i][0])) > 0.0) {
+                                echo '+';
+                              } else {
+                                echo ' ';
+                              }
+                            
+                            ?><?= number_format(get_investment_profit_value($role["client_id"], $currency[$i][0]),2,',',' ') ?> ₽
+                          </p>
                         </span>
-                    </article>
+                    </a>
 
                     <?php endfor ?>
                 </div>
@@ -246,17 +346,67 @@
                     <article class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                         <span class="flex gap-4 items-center">
                         <img class="object-cover w-14 h-14 rounded-2xl" src="<?= get_image($metals[$i][2]) ?>" alt="">
-                        <span class="flex flex-col">
-                            <h1 class="font-bold text-slate-950 text-sm"><?= get_name($metals[$i][2]) ?></h1>
-                            <p class="text-slate-700 text-sm"><?= $metals[$i][4] ?> шт.</p>
-                            <p class="text-slate-700 text-sm">321,12 ₽ → 521,8 ₽</p>
-                        </span>
+                            <span class="flex flex-col">
+                                <h1 class="font-bold text-slate-950 text-sm capitalize"><?= get_name($metals[$i][2]) ?></h1>
+                                <p class="text-slate-700 text-sm"><?= $metals[$i][5] ?> шт.</p>
+                                <p class="text-slate-700 text-sm"><?= number_format($metals[$i][3],2,',',' ') ?> ₽ → <?= number_format($metals[$i][4],2,',',' ') ?> ₽</p>
+                            </span>
                         </span>
 
                         <span class="flex flex-col text-right">
-                        <p class="text-slate-950 text-sm"><?php echo number_format($metals[$i][3]*$metals[$i][4], 2, ',', ' ');  ?> ₽</p>
-                        <p class="text-green-500 text-sm">+0,48 %</p>
-                        <p class="text-green-500 text-sm">+0,15 ₽</p>
+                          <p class="text-slate-950 text-sm"><?php echo number_format($metals[$i][3]*$metals[$i][5], 2, ',', ' ');  ?> ₽</p>
+
+                          <p class="
+                          
+                          <?php 
+                              if (abs(get_investment_profit_percent($role["client_id"], $metals[$i][0])) < 0.0) {
+                                echo 'text-red-500';
+                              } else if (abs(get_investment_profit_percent($role["client_id"], $metals[$i][0])) > 0.0) {
+                                echo 'text-green-500';
+                              } else {
+                                echo 'text-slate-500';
+                              }
+                          ?>
+                          
+                          text-sm">
+                            <?php
+
+                              if (abs(get_investment_profit_percent($role["client_id"], $metals[$i][0])) < 0.0) {
+                                echo ' ';
+                              } else if (abs(get_investment_profit_percent($role["client_id"], $metals[$i][0])) > 0.0) {
+                                echo '+';
+                              } else {
+                                echo ' ';
+                              }
+                            
+                            ?><?= number_format(get_investment_profit_percent($role["client_id"], $metals[$i][0]),2,',',' ') ?> %
+                          </p>
+
+                          <p class="
+                          
+                          <?php 
+                              if (abs(get_investment_profit_value($role["client_id"], $metals[$i][0])) < 0.0) {
+                                echo 'text-red-500';
+                              } else if (abs(get_investment_profit_value($role["client_id"], $metals[$i][0])) > 0.0) {
+                                echo 'text-green-500';
+                              } else {
+                                echo 'text-slate-500';
+                              }
+                          ?>
+                          
+                          text-sm">
+                            <?php
+
+                              if (abs(get_investment_profit_value($role["client_id"], $metals[$i][0])) < 0.0) {
+                                echo ' ';
+                              } else if (abs(get_investment_profit_value($role["client_id"], $metals[$i][0])) > 0.0) {
+                                echo '+';
+                              } else {
+                                echo ' ';
+                              }
+                            
+                            ?><?= number_format(get_investment_profit_value($role["client_id"], $metals[$i][0]),2,',',' ') ?> ₽
+                          </p>
                         </span>
                     </article>
 

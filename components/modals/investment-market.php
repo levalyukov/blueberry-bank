@@ -1,5 +1,5 @@
 <?php 
-    require_once('include/investment-market.php');
+    require_once('include/investment/investment-market.php');
 
     if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
         create_securities();

@@ -1,6 +1,6 @@
 <?php
     require_once("include/dashboard.php");
-    require_once("include/investment-buy.php");
+    require_once("include/investment/investment-buy.php");
 
     $accounts = get_user_accounts($role["client_id"]);
     $price = get_price($_GET["id"]);
@@ -26,7 +26,7 @@
           </div>
         <?php endif ?>
 
-        <form action="include/investment-buy.php?action=<?= $_GET["action"] ?>&id=<?= $_GET["id"] ?>&type=<?= $_GET["type"] ?>" method="POST" class="flex flex-col gap-6 h-full">
+        <form action="include/investment/investment-buy.php?action=<?= $_GET["action"] ?>&id=<?= $_GET["id"] ?>&type=<?= $_GET["type"] ?>" method="POST" class="flex flex-col gap-6 h-full">
             <span class="flex flex-col gap-2">
               <label for="count" class="font-bold text-slate-950 text-lg">Счёт списания</label>
               <el-select id="select" name="account_id" value="1" class="w-full">

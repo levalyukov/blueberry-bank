@@ -24,7 +24,7 @@
       <?php endif ?>
       
       <div class="flex flex-col">
-        <form method="POST" action="include/investment-account-refill.php" class="flex flex-col gap-6 h-full">
+        <form method="POST" action="include/investment/investment-account-refill.php" class="flex flex-col gap-6 h-full">
           <span class="flex flex-col gap-2">
             <label class="font-bold text-slate-950 text-lg" for="">Откуда</label>
             <el-select id="select" name="selected" value="1" class="w-full">

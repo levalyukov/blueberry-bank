@@ -1,8 +1,8 @@
 <?php
     session_start();
-    require_once("db.php");
-    require_once("dashboard.php");
-    require_once("investment.php");
+    require_once(__DIR__ . "/../db.php");
+    require_once(__DIR__ . "/../dashboard.php");
+    require_once(__DIR__ . "/../investment.php");
 
     $id = $_GET["id"];
     $value = $_POST["value"];
@@ -28,7 +28,7 @@
                 if (!$securities_update->execute()) {
                     $securities_update->close();
                     $_SESSION["transaction-error"] = "Произошла ошибка при создании заявки: " . $securities_update->error;
-                    header("Location: ../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
+                    header("Location: ../../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
                     exit();
                 }
 
@@ -49,16 +49,16 @@
             $transaction->bind_param("di", $total_price, $account_id);
             if ($securitiesAdded && $transaction->execute()) {
                 $transaction->close();
-                header("Location: ../index.php?page=investment");
+                header("Location: ../../index.php?page=investment");
                 exit();              
             } else {
                 $_SESSION["transaction-error"] = "Произошла ошибка при создании заявки.";
-                header("Location: ../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
+                header("Location: ../../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
                 exit();
             }
         } else {
             $_SESSION["transaction-error"] = "Недостаточно средств.";
-            header("Location: ../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
+            header("Location: ../../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
             exit();
         }
     }
@@ -67,9 +67,9 @@
     {
         switch ($_GET["type"]) {
             case "stocks":
-                return "акции";
+                return "акций";
             case "bonds":
-                return "облигации";
+                return "облигаций";
             case "currency":
                 return "валюты";
             case "metals":

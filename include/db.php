@@ -146,7 +146,7 @@
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
         VALUES ('CNY', 'Китайский юань', 13.12, 32.72, 'currency', 'assets/flags/CN.svg')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
-        VALUES ('USD', 'Американский Доллар', 13.12, 52.72, 'currency', 'assets/flags/US.svg')");
+        VALUES ('USD', 'Американский доллар', 13.12, 52.72, 'currency', 'assets/flags/US.svg')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 
         VALUES ('EUR', 'Евро', 13.12, 52.72, 'currency', 'assets/flags/EU.svg')");
         $conn->query("INSERT INTO securities (symbol, name, volatility, price, type, image) 

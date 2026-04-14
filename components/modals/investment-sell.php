@@ -1,6 +1,6 @@
 <?php
     require_once("include/dashboard.php");
-    require_once("include/investment-buy.php");
+    require_once("include/investment/investment-buy.php");
 
     $accounts = get_user_accounts($role["client_id"]);
     $price = get_price($_GET["id"]);
@@ -10,14 +10,14 @@
 <div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center items-center">
   <div class="w-150 bg-slate-50 m-5 rounded-xl shadow-md">
     <header class="p-2 flex justify-end">
-      <a href="index.php?page=investment&action=market" class="flex h-8 w-8 justify-center items-center text-slate-700 
+      <a href="index.php?page=investment" class="flex h-8 w-8 justify-center items-center text-slate-700 
       hover:text-slate-50 hover:bg-red-400 rounded-lg">
         <i class="fa-solid fa-xmark"></i>
       </a>
     </header>
 
     <div class="flex flex-col px-8 pb-8 gap-6 overflow-y-scroll h-[calc(100%-64px)] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <h1 class="font-bold text-3xl text-slate-950">Покупка <?= get_type_transaction() . " " . get_name($_GET["id"]) ?></h1>
+        <h1 class="font-bold text-3xl text-slate-950">Продажа <?= get_type_transaction() . " " . get_name($_GET["id"]) ?></h1>
 
         <?php if (isset($_SESSION["transaction-error"])): ?>
           <div class="w-full bg-red-500/25 p-4 rounded-xl border-1 border-red-500 text-red-950">
@@ -26,7 +26,7 @@
           </div>
         <?php endif ?>
 
-        <form action="include/investment-buy.php?action=<?= $_GET["action"] ?>&id=<?= $_GET["id"] ?>&type=<?= $_GET["type"] ?>" method="POST" class="flex flex-col gap-6 h-full">
+        <form action="include/investment/investment-buy.php?action=<?= $_GET["action"] ?>&id=<?= $_GET["id"] ?>&type=<?= $_GET["type"] ?>" method="POST" class="flex flex-col gap-6 h-full">
             <span class="flex flex-col gap-2">
               <label for="count" class="font-bold text-slate-950 text-lg">Счёт списания</label>
               <el-select id="select" name="account_id" value="1" class="w-full">
