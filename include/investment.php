@@ -71,16 +71,16 @@
         global $conn;
         $result = false;
 
-        $account = $conn->prepare("SELECT * FROM accounts WHERE account_name = 'Брокерский счёт'");
-        $account->execute();
-        if ($account->get_result()->fetch_assoc()) {
+        $account = $conn->prepare("SELECT * FROM accounts WHERE user_id = ? AND account_name = 'Брокерский счёт'");
+        $account->bind_param("i", $client_id);
+        if ($account->execute() && $account->get_result()->fetch_assoc()) {
             $result = true;
         }
         
         return $result;
     }
 
-    function has_invenstment_portfoile(int $client_id) : bool
+    function has_invenstment_portfolio(int $client_id) : bool
     {
         global $conn;
         $result = false;
@@ -89,20 +89,29 @@
         $account->execute();
         if ($account->get_result()->fetch_row()) {
             $result = true;
-        } else {
-            init_portfolio();
         }
         
         return $result;
     }
 
-    function get_investment_account(int $client_id) : int
+    function get_investment_account(int $client_id) : float
     {
         global $conn;
+        $result = 0;
+
         $balance = $conn->prepare("SELECT balance FROM accounts WHERE (user_id, account_name) = (?, 'Брокерский счёт')");
         $balance->bind_param("i", $client_id);
-        $balance->execute();
-        return $balance->get_result()->fetch_assoc()['balance'];
+
+        if ($balance->execute()) {
+            $balance->bind_result($result);
+            if (!$balance->fetch()) {
+                die($conn->error);
+            }
+
+            $balance->close();
+        }
+
+        return $result;
     }
 
     function get_investment_profit_value(int $client_id, int $securities) : float
@@ -120,11 +129,12 @@
         global $conn;
         $result = [];
 
-        if (has_invenstment_portfoile($client_id)) {
+        if (has_invenstment_portfolio($client_id)) {
             $portfolio = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ?");
             $portfolio->bind_param("i", $client_id);
             if ($portfolio->execute()) {
                 $result = $portfolio->get_result()->fetch_all();
+                $portfolio->close();
             }
         }
     
@@ -136,10 +146,13 @@
         global $conn;
         $result = [];
 
-        $stocks = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'stocks')");
-        $stocks->bind_param("i", $client_id);
-        if ($stocks->execute()) {
-            $result = $stocks->get_result()->fetch_all();
+        if (has_invenstment_portfolio($client_id)) {
+            $stocks = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ? AND type = 'stocks'");
+            $stocks->bind_param("i", $client_id);
+            if ($stocks->execute()) {
+                $result = $stocks->get_result()->fetch_all();
+                $stocks->close();
+            }
         }
 
         return $result;
@@ -150,10 +163,13 @@
         global $conn;
         $result = [];
 
-        $stocks = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'bonds')");
-        $stocks->bind_param("i", $client_id);
-        if ($stocks->execute()) {
-            $result = $stocks->get_result()->fetch_all();
+        if (has_invenstment_portfolio($client_id)) {
+            $bonds = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'bonds')");
+            $bonds->bind_param("i", $client_id);
+            if ($bonds->execute()) {
+                $result = $bonds->get_result()->fetch_all();
+                $bonds->close();
+            }
         }
 
         return $result;
@@ -164,10 +180,13 @@
         global $conn;
         $result = [];
 
-        $stocks = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'currency')");
-        $stocks->bind_param("i", $client_id);
-        if ($stocks->execute()) {
-            $result = $stocks->get_result()->fetch_all();
+        if (has_invenstment_portfolio($client_id)) {
+            $currency = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'currency')");
+            $currency->bind_param("i", $client_id);
+            if ($currency->execute()) {
+                $result = $currency->get_result()->fetch_all();
+                $currency->close();
+            }
         }
 
         return $result;
@@ -178,10 +197,13 @@
         global $conn;
         $result = [];
 
-        $stocks = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'metals')");
-        $stocks->bind_param("i", $client_id);
-        if ($stocks->execute()) {
-            $result = $stocks->get_result()->fetch_all();
+        if (has_invenstment_portfolio($client_id)) {
+            $metals = $conn->prepare("SELECT * FROM portfolio WHERE (user_id, type) = (?, 'metals')");
+            $metals->bind_param("i", $client_id);
+            if ($metals->execute()) {
+                $result = $metals->get_result()->fetch_all();
+                $metals->close();
+            }
         }
 
         return $result;
@@ -193,17 +215,75 @@
         $array = [];
         $result = 0.0;
 
-        $total_balance = $conn->prepare("SELECT new_price, amount FROM portfolio WHERE user_id = ?");
-        $total_balance->bind_param("i", $client_id);
+        if (has_invenstment_portfolio($client_id)) {
+            $total_balance = $conn->prepare("SELECT new_price, amount FROM portfolio WHERE user_id = ?");
+            $total_balance->bind_param("i", $client_id);
 
-        if ($total_balance->execute()) {
-            $array = $total_balance->get_result()->fetch_all();
-        
-            for ($i = 0; $i < count($array); $i++) {
-                $result += $array[$i][0]*$array[$i][1];
-            } 
+            if ($total_balance->execute()) {
+                $array = $total_balance->get_result()->fetch_all();
+            
+                for ($i = 0; $i < count($array); $i++) {
+                    $result += $array[$i][0]*$array[$i][1];
+                } 
 
+                $total_balance->close();
+            }
+        }
+
+        if (has_invenstment_account($client_id)) {
             $result += get_investment_account($client_id);
+        }
+
+        return $result;
+    }
+
+    function get_type_transaction() : string
+    {
+        switch ($_GET["type"]) {
+            case "stocks":
+                return "акций";
+            case "bonds":
+                return "облигаций";
+            case "currency":
+                return "валюты";
+            case "metals":
+                return "металла";
+            default:
+                return "";
+        }
+    }
+
+    function get_securities_by_id(int $securities_id) : array
+    {
+        global $conn;
+        $result = [];
+
+        $securities = $conn->prepare("SELECT * FROM portfolio WHERE securities_id = ?");
+        $securities->bind_param("i", $securities_id);
+        if ($securities->execute()) {
+            $result = $securities->get_result()->fetch_assoc() ?? [];
+            $securities->close();
+        }
+
+        return $result;
+    }
+
+    function get_investment_account_id(int $client_id) : int
+    {
+        global $conn;
+        $result = 0;
+
+        $account = $conn->prepare("SELECT id FROM accounts WHERE user_id = ? AND account_name = 'Брокерский счёт'");
+        $account->bind_param("i", $client_id);
+        if ($account->execute()) {
+            $account->bind_result($result);
+            if (!$account->fetch()) {
+                die($conn->error);
+            }
+
+            $account->close();
+        } else {
+            die($conn->error);
         }
 
         return $result;

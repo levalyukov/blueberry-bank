@@ -1,10 +1,16 @@
 <?php
     require_once("include/dashboard.php");
-    require_once("include/investment/investment-buy.php");
+    require_once("include/investment.php");
+    require_once("include/investment/investment-sell.php");
 
     $accounts = get_user_accounts($role["client_id"]);
     $price = get_price($_GET["id"]);
+    $securities = get_securities_by_id($_GET["id"])["amount"] ?? 0;
 
+    if ($securities == 0) {
+        header("Location: index.php?page=investment");
+        exit();
+    }
 ?>
 
 <div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center items-center">
@@ -26,10 +32,10 @@
           </div>
         <?php endif ?>
 
-        <form action="include/investment/investment-buy.php?action=<?= $_GET["action"] ?>&id=<?= $_GET["id"] ?>&type=<?= $_GET["type"] ?>" method="POST" class="flex flex-col gap-6 h-full">
+        <form action="include/investment/investment-sell.php?action=<?= $_GET["action"] ?>&id=<?= $_GET["id"] ?>&type=<?= $_GET["type"] ?>" method="POST" class="flex flex-col gap-6 h-full">
             <span class="flex flex-col gap-2">
-              <label for="count" class="font-bold text-slate-950 text-lg">Счёт списания</label>
-              <el-select id="select" name="account_id" value="1" class="w-full">
+              <label for="count" class="font-bold text-slate-950 text-lg">Счёт пополнения</label>
+              <el-select id="select" name="account_id" value="<?= get_investment_account_id($role["client_id"]) ?>" class="w-full">
                 <button type="button" class="flex w-full cursor-pointer p-4 bg-slate-100 outline-none border-1 rounded-lg text-slate-700
                 hover:border-blue-500 hover:bg-blue-100 placeholder:text-state-400">
                     <el-selectedcontent class="flex flex-col w-full"></el-selectedcontent>
@@ -57,12 +63,12 @@
                 </el-options>
               </el-select>
             </span>
-
-          <span class="flex flex-col gap-2">
+        
+            <span class="flex flex-col gap-2">
             <label class="font-bold text-slate-950 text-lg flex items-center gap-2" for="">Количество <p id="securities-price" class="text-sm font-normal text-slate-700">(цена: 0 ₽)</p></label>
             <input require id="securities-value" type="number" class="p-4 bg-slate-100 outline-none border-1 border-slate-600 rounded-lg 
             hover:border-blue-500 hover:bg-blue-100 cursor-pointer placeholder:text-state-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            placeholder="Введите количество ценных бумаг для приобретения" min="1" value="1" name="value">
+            placeholder="Введите количество ценных бумаг для продажи" min="1" value="1" name="value">
           </span>
 
           <button type="submit" class="w-full text-slate-950 bg-slate-300/50 cursor-pointer text-center gap-2 p-4 
@@ -71,26 +77,28 @@
           </button>
         </form>
 
-
         <script>
             const formatter = new Intl.NumberFormat('ru-RU', {style: 'currency', currency: 'RUB'})
             const input = document.getElementById("securities-value");
             const price = document.getElementById("securities-price");
             const valuation = '<?= $price ?>'
+            const amount = parseFloat('<?= $securities ?>');
 
             if (input) {
                 if (price) {
-                    price.innerHTML = `(цена: ${formatter.format(input.value*valuation)})`
+                    price.innerHTML = `(Кол-во: ${amount}, цена: ${formatter.format(input.value*valuation)})`;
                     input.addEventListener("input", () => {
-                        
                         let value; 
-                        if (input.value > 0) {
-                          value = input.value*valuation;
-                        } else {
-                          value = 0;
-                        };
+                        const inputValue = parseInt(input.value);
 
-                        price.innerHTML = `(цена: ${formatter.format(value)})`
+                        if (inputValue > 0 && inputValue <= amount) {
+                            value = inputValue*valuation;
+                        } else {
+                            input.value = amount;
+                            value = amount*valuation;
+                        }
+
+                        price.innerHTML = `(Кол-во: ${amount}, цена: ${formatter.format(value)})`;
                     })
                 }
             }

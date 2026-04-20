@@ -62,21 +62,4 @@
             exit();
         }
     }
-
-    function get_type_transaction() : string
-    {
-        switch ($_GET["type"]) {
-            case "stocks":
-                return "акций";
-            case "bonds":
-                return "облигаций";
-            case "currency":
-                return "валюты";
-            case "metals":
-                return "металла";
-            default:
-                return "";
-        }
-    }
-
 ?>
