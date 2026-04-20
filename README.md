@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-    <span style="font-size:32px;">Blueberry Bank</span>
+    <p  >Blueberry Bank</p>
 </div>
 
 ##
