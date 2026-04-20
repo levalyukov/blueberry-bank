@@ -11,6 +11,24 @@
 
     if ($conn->connect_error) {
         $db_error = $conn->connect_error;
+    } else {
+        $database = $conn->query("CREATE DATABASE bank");
+        if ($database) {
+            $database->close();
+        }
+    }
+
+    function create_accounts() : void
+    {
+        global $conn;
+        if (!$conn->query("CREATE TABLE accounts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            balance DECIMAL(15,2) DEFAULT 10000.00,
+            account_name VARCHAR(100) DEFAULT 'Основной счёт'
+        )")) {
+            die($conn->error);
+        }
     }
 
     function create_securities() : void
@@ -41,8 +59,7 @@
     function init_portfolio() : void
     {
         global $conn;
-
-        $conn->query("CREATE TABLE `portfolio` (
+        if (!$conn->query("CREATE TABLE `portfolio` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `user_id` INT NOT NULL,
             `securities_id` INT NOT NULL,
@@ -50,7 +67,9 @@
             `old_price` DECIMAL(10,2) NOT NULL,
             `amount` INT NOT NULL,
             `type` ENUM('stocks','bonds','currency','metals') DEFAULT 'stocks'
-        )");
+        )")) {
+            die($conn->error);
+        }
     }
 
     function init_stocks() : void 
