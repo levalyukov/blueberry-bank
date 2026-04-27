@@ -6,18 +6,18 @@
 
 
 <?php
-    $subscribe = false;
-
+    $subscribe = !false;
     $page = $_GET['page'] ?? 'dashboard';
     $active = "cursor-pointer text-blue-500 bg-blue-100 p-3 rounded-xl capitalize flex gap-2 px-4";
     $default = "cursor-pointer text-slate-700 p-3 rounded-xl capitalize flex gap-2 px-4 hover:bg-slate-200/75 hover:text-slate-950 text-md";
 ?>
 
-<aside class="h-screen w-xs bg-slate-50 px-6 py-8 border-r-1 border-slate-300 flex flex-col shrink-0">
+<aside id="navmenu" class="h-screen w-xs bg-slate-50 px-6 py-8 border-r-1 border-slate-300 flex flex-col shrink-0">
     <header class="text-slate-950 flex justify-between items-center mb-12">
         <img src="assets/logotype.svg" alt="logotype.svg">
-        <!-- <button class="cursor-pointer h-8 w-8 flex justify-center items-center rounded-md text-slate-700 hover:bg-slate-200/75 hover:text-slate-950 shrink-0">
-        <span class="flex justify-center items-center"><i class="fa-solid fa-xmark"></i></span>
+        <!-- <button class="cursor-pointer h-8 w-8 flex justify-center items-center rounded-md text-slate-
+         hover:bg-slate-200/75 hover:text-slate-950 shrink-0" onclick="navmenu()">
+            <span class="flex justify-center items-center"><i class="fa-solid fa-xmark"></i></span>
         </button> -->
     </header>
 

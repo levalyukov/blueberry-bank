@@ -12,6 +12,12 @@
     if (!$conn->query("SHOW TABLES LIKE 'accounts'")->fetch_row()) {
         create_accounts();
     }
+
+    if (!$conn->query("SHOW TABLES LIKE 'transactions'")->fetch_row()) {
+        create_transactions();
+    }
+
+    $transactions = array_reverse(get_user_history(get_user_accounts_id($role["client_id"])));
 ?>
 
 
@@ -143,26 +149,78 @@
         <p class="text-slate-950 font-bold capitalize text-xl py-1 mb-5">Последние операции</p>
         <div class="flex flex-col gap-8 h-full">
 
-        <?php if (count(get_user_last_history((int)$role['client_id'])) > 0): ?>
+        <?php if (count($transactions) > 0): ?>
 
-            <?php for ($i = 0; $i < 4; $i++): ?>
+            <?php for ($i = 0; $i < $transactions[$i] && $i < 4; $i++): ?>
             <article class="flex justify-between items-center gap-4">
                 <span class="flex gap-4">
-                    <span class="h-13 w-13 bg-slate-200 rounded-xl flex justify-center items-center text-green-500 text-xl">
-                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    <span class="h-13 w-13 
+                    
+                    <?php
+                    
+                        if (strpos($transactions[$i][5], "investment") === 0) {
+                            echo "bg-red-400";
+                        } else if (strpos($transactions[$i][5], "transfer") === 0) {
+                            echo "bg-blue-400"; 
+                        } else if (strpos($transactions[$i][5], "replenishment") === 0) {
+                            echo "bg-green-400"; 
+                        } else if (strpos($transactions[$i][5], "withdrawal") === 0) {
+                            // echo "bg-"; 
+                        } else if (strpos($transactions[$i][5], "purchase") === 0) {
+                            echo "bg-";
+                        }
+                    
+                    ?> 
+                    
+                    rounded-2xl flex justify-center items-center text-slate-50 text-xl">
+                        <i class="
+                        
+                        <?php 
+                        
+                            if (strpos($transactions[$i][5], "investment") === 0) {
+                                echo "fa-solid fa-money-bill-trend-up";
+                            } else if (strpos($transactions[$i][5], "transfer") === 0) {
+                                echo "fa-solid fa-money-bill-transfer"; 
+                            } else if (strpos($transactions[$i][5], "replenishment") === 0) {
+                                echo "fa-solid fa-plus"; 
+                            }
+
+                        ?>
+                        "
+                        ></i>
                     </span>
                     <span class="flex flex-col">
-                        <h1 class="font-bold text-slate-950 text-md">Василий А.</h1>
-                        <p class="text-slate-700">Перевод • 34 мин. назад</p>
+                        <h1 class="font-bold text-slate-950 text-md"><?= $transactions[$i][3] ?></h1>
+                        <p class="text-slate-700"><?= get_type_transaction($transactions[$i][5]) ?> • 2 мин. назад</p>
                     </span>
                 </span>
-                <p class="text-green-500">+5 213,52 ₽</p>
+                <p class="
+                
+                <?=
+                    (
+                        strpos($transactions[$i][5], 'replenishment') === 0 ||
+                        strpos($transactions[$i][5], 'investment-sale') === 0
+                    ) 
+                    ? 'text-green-500' : 'text-slate-700'
+                ?>
+                
+                ">
+                
+                <?=
+                    (
+                        strpos($transactions[$i][5], 'replenishment') === 0 ||
+                        strpos($transactions[$i][5], 'investment-sale') === 0
+                    )
+                    ? '+' : '-'
+                ?><?= number_format($transactions[$i][4], 2, ',', ' ') ?> ₽</p>
             </article>
             <?php endfor ?>
 
-        <a href="index.php?page=history" class="text-blue-500 cursor-pointer flex justify-center items-center gap-2 p-4 hover:bg-blue-100 rounded-xl mt-auto">
-            Все операции <span><i class="fa-solid fa-arrow-right"></i></span>
-        </a>
+            <?php if (count($transactions) > 4): ?>
+                <a href="index.php?page=history" class="text-blue-500 cursor-pointer flex justify-center items-center gap-2 p-4 hover:bg-blue-100 rounded-xl mt-auto">
+                    Все операции <span><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            <?php endif ?>
 
         <?php else: ?>
 

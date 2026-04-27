@@ -6,10 +6,18 @@
 
 
 <?php
-    require_once('include/dashboard.php');
+    require_once("include/dashboard.php");
+    require_once("include/transactions.php");
+
     $filter = $_GET["filter"] ?? "all";
     $active  = "cursor-pointer text-blue-500 bg-blue-100 p-3 rounded-full border-1 border-blue-500/50 capitalize flex gap-2 px-4 py-2";
     $default = "cursor-pointer px-4 py-2 rounded-full bg-slate-50 text-slate-700 border-1 border-transparent  hover:text-slate-950 hover:bg-slate-100";
+
+    if (!$conn->query("SHOW TABLES LIKE 'transactions'")->fetch_row()) {
+        create_transactions();
+    }
+
+    $transactions = array_reverse(get_user_history(get_user_accounts_id($role["client_id"])));
 ?>
 
 <section class="px-12 pt-8 w-full h-screen overflow-y-scroll overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -20,44 +28,74 @@
 
         <?php include_once("user-panel.php") ?>
     </header>
-
-  <!-- Filters -->
-
-    <div class="flex flex-col gap-2 mb-6">
-        <h1 class="font-bold text-lg text-slate-950">Фильтры</h1>
-        <div action="" method="POST" class="flex gap-2">
-            <a href="index.php?page=history&filter=all" class="<?php echo ($filter === "all") ? $active : $default ?>">Все</a>
-            <a href="index.php?page=history&filter=refill" class="<?php echo ($filter === "refill") ? $active : $default ?>">Пополнения</a>
-            <a href="index.php?page=history&filter=offs" class="<?php echo ($filter === "offs") ? $active : $default ?>">Списание</a>
-            <a href="index.php?page=history&filter=week" class="<?php echo ($filter === "week") ? $active : $default ?>">Неделя</a>
-            <a href="index.php?page=history&filter=month" class="<?php echo ($filter === "month") ? $active : $default ?>">Месяц</a>
-        </div>
-    </div>
-
-  <!-- ------- -->
   
-    <div class="grid grid-cols-2 gap-10">
+    <div class="grid grid-cols-2 gap-6">
         <div class="flex flex-col gap-8 mb-8 bg-slate-50 p-8 rounded-3xl">
-            <?php if (0): ?>
-                <h1 class="text-lg font-bold text-slate-950">30 марта</h1>
-
-                <?php for ($i = 1; $i < 6; $i++): ?>
+            <?php if (count($transactions) > 0): ?>
+                <?php for ($i = 0; $i < count($transactions); $i++): ?>
                     <article class="flex justify-between items-center gap-4">
                     <span class="flex gap-4">
-                        <span class="h-13 w-13 bg-slate-300/50 rounded-xl flex justify-center items-center text-sky-500 text-xl">
-                            <i class="fa-solid fa-basket-shopping"></i>
+                        <span class="h-13 w-13 
+                        
+                        <?php
+                        
+                            if (strpos($transactions[$i][5], "investment") === 0) {
+                                echo "bg-red-400";
+                            } else if (strpos($transactions[$i][5], "transfer") === 0) {
+                                echo "bg-blue-400"; 
+                            } else if (strpos($transactions[$i][5], "replenishment") === 0) {
+                                echo "bg-green-400"; 
+                            } else if (strpos($transactions[$i][5], "withdrawal") === 0) {
+                                // echo "bg-"; 
+                            } else if (strpos($transactions[$i][5], "purchase") === 0) {
+                                echo "bg-";
+                            }
+                        
+                        ?> 
+                        
+                        rounded-xl flex justify-center items-center text-slate-50 text-xl">
+                            <i class="
+                            
+                            <?php 
+                            
+                                if (strpos($transactions[$i][5], "investment") === 0) {
+                                    echo "fa-solid fa-money-bill-trend-up";
+                                } else if (strpos($transactions[$i][5], "transfer") === 0) {
+                                    echo "fa-solid fa-money-bill-transfer"; 
+                                } else if (strpos($transactions[$i][5], "replenishment") === 0) {
+                                    echo "fa-solid fa-plus"; 
+                                }
+
+                            ?>
+                            "
+                            ></i>
                         </span>
                         <span class="flex flex-col">
-                            <h1 class="font-bold text-slate-950 text-md">Магнит</h1>
-                            <p class="text-slate-700">Продукты • 2 мин. назад</p>
+                            <h1 class="font-bold text-slate-950 text-md"><?= $transactions[$i][3] ?></h1>
+                            <p class="text-slate-700"><?= get_type_transaction($transactions[$i][5]) ?> • 2 мин. назад</p>
                         </span>
                     </span>
-                    <p class="text-slate-950">-1 123,92 ₽</p>
+                <p class="
+                
+                <?=
+                    (
+                        strpos($transactions[$i][5], 'replenishment') === 0 ||
+                        strpos($transactions[$i][5], 'investment-sale') === 0
+                    ) 
+                    ? 'text-green-500' : 'text-slate-700'
+                ?>
+                
+                ">
+                
+                <?=
+                    (
+                        strpos($transactions[$i][5], 'replenishment') === 0 ||
+                        strpos($transactions[$i][5], 'investment-sale') === 0
+                    )
+                    ? '+' : '-'
+                ?><?= number_format($transactions[$i][4], 2, ',', ' ') ?> ₽</p>
                     </article>
                 <?php endfor ?>
-
-                <button class="text-slate-700 bg-slate-300/50 cursor-pointer flex justify-center items-center gap-2 p-4 
-                hover:bg-slate-300 hover:text-slate-950 rounded-xl mt-auto">Показать еще</button>
             <?php else: ?>
                 <span class="flex justify-center items-center h-full">
                     <h1>Пусто!</h1>

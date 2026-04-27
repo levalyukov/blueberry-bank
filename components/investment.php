@@ -114,10 +114,10 @@
                                             class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                                             <span class="flex gap-4 items-center">
                                                 <img class="object-cover w-14 h-14 rounded-2xl"
-                                                    src="<?= get_image($stocks[$i][2]) ?>" alt="">
+                                                    src="<?= get_securities_image($stocks[$i][2]) ?>" alt="">
                                                 <span class="flex flex-col">
                                                     <h1 class="font-bold text-slate-950 text-sm capitalize capitalize">
-                                                        <?= get_name($stocks[$i][2]) ?>
+                                                        <?= get_securities_name($stocks[$i][2]) ?>
                                                     </h1>
                                                     <p class="text-slate-700 text-sm"><?= $stocks[$i][5] ?> шт.</p>
                                                     <p class="text-slate-700 text-sm">
@@ -205,10 +205,10 @@
                                             class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                                             <span class="flex gap-4 items-center">
                                                 <img class="object-cover w-14 h-14 rounded-2xl"
-                                                    src="<?= get_image($bonds[$i][2]) ?>" alt="">
+                                                    src="<?= get_securities_image($bonds[$i][2]) ?>" alt="">
                                                 <span class="flex flex-col">
                                                     <h1 class="font-bold text-slate-950 text-sm capitalize">
-                                                        <?= get_name($bonds[$i][2]) ?></h1>
+                                                        <?= get_securities_name($bonds[$i][2]) ?></h1>
                                                     <p class="text-slate-700 text-sm"><?= $bonds[$i][5] ?> шт.</p>
                                                     <p class="text-slate-700 text-sm">
                                                         <?= number_format($bonds[$i][3], 2, ',', ' ') ?> ₽ →
@@ -293,10 +293,10 @@
                                             class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                                             <span class="flex gap-4 items-center">
                                                 <img class="object-cover w-14 h-14 rounded-2xl"
-                                                    src="<?= get_image($currency[$i][2]) ?>" alt="">
+                                                    src="<?= get_securities_image($currency[$i][2]) ?>" alt="">
                                                 <span class="flex flex-col">
                                                     <h1 class="text-sm font-bold text-slate-950 capitalize">
-                                                        <?= get_name($currency[$i][2]) ?></h1>
+                                                        <?= get_securities_name($currency[$i][2]) ?></h1>
                                                     <p class="text-sm text-slate-700"><?= $currency[$i][5] ?> шт.</p>
                                                     <p class="text-sm text-slate-700">
                                                         <?= number_format($currency[$i][3], 2, ',', ' ') ?> ₽ →
@@ -383,10 +383,10 @@
                                             class="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-slate-200/75">
                                             <span class="flex gap-4 items-center">
                                                 <img class="object-cover w-14 h-14 rounded-2xl"
-                                                    src="<?= get_image($metals[$i][2]) ?>" alt="">
+                                                    src="<?= get_securities_image($metals[$i][2]) ?>" alt="">
                                                 <span class="flex flex-col">
                                                     <h1 class="font-bold text-slate-950 text-sm capitalize">
-                                                        <?= get_name($metals[$i][2]) ?></h1>
+                                                        <?= get_securities_name($metals[$i][2]) ?></h1>
                                                     <p class="text-slate-700 text-sm"><?= $metals[$i][5] ?> шт.</p>
                                                     <p class="text-slate-700 text-sm">
                                                         <?= number_format($metals[$i][3], 2, ',', ' ') ?> ₽ →

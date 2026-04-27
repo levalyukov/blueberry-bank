@@ -23,7 +23,7 @@
         exit();
     }
 
-    function get_name(int $id) : string
+    function get_securities_name(int $id) : string
     {
         global $conn;
         $name = "";
@@ -37,7 +37,7 @@
         return $name;
     }
 
-    function get_image(int $id) : string
+    function get_securities_image(int $id) : string
     {
         global $conn;
         $name = "";
@@ -51,7 +51,7 @@
         return $name;
     }
 
-    function get_price(int $id) : float
+    function get_securities_price(int $id) : float
     {
         global $conn;
         $price = 0;
@@ -237,7 +237,7 @@
         return $result;
     }
 
-    function get_type_transaction() : string
+    function get_type_transaction_header() : string
     {
         switch ($_GET["type"]) {
             case "stocks":

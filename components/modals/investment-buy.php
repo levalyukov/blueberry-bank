@@ -3,7 +3,7 @@
     require_once("include/investment/investment-buy.php");
 
     $accounts = get_user_accounts($role["client_id"]);
-    $price = get_price($_GET["id"]);
+    $price = get_securities_price($_GET["id"]);
 ?>
 
 <div class="absolute bg-slate-950/25 w-full h-screen backdrop-blur-xs z-1 flex justify-center items-center">
@@ -18,7 +18,7 @@
         <div
             class="flex flex-col px-8 pb-8 gap-6 overflow-y-scroll h-[calc(100%-64px)] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <h1 class="font-bold text-3xl text-slate-950">Покупка
-                <?= get_type_transaction() . " " . get_name($_GET["id"]) ?></h1>
+                <?= get_type_transaction_header() . " " . get_securities_name($_GET["id"]) ?></h1>
 
             <?php if (isset($_SESSION["transaction-error"])): ?>
                 <div class="w-full bg-red-500/25 p-4 rounded-xl border-1 border-red-500 text-red-950">

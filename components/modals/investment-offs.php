@@ -81,7 +81,7 @@
             <label class="font-bold text-slate-950 text-lg" for="">Сумма</label>
             <input type="number" class="p-4 bg-slate-100 outline-none border-1 border-slate-600 rounded-lg 
             hover:border-blue-500 hover:bg-blue-100 cursor-pointer placeholder:text-state-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            placeholder="0 ₽" name="offs-value">
+            placeholder="0 ₽" step="0.01" name="offs-value">
           </span>
 
           <button type="submit" class="w-full text-slate-950 bg-slate-300/50 cursor-pointer text-center gap-2 p-4 

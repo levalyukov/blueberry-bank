@@ -31,6 +31,26 @@
         }
     }
 
+    function create_transactions() : void
+    {
+        global $conn;
+        if (!$conn->query("SHOW TABLES LIKE 'transactions'")->fetch_row()) {
+        $conn->query("CREATE TABLE `transactions` (
+            `transaction_id` INT AUTO_INCREMENT PRIMARY KEY,
+            `sender_account_id` INT NOT NULL,
+            `recipient_account_id` INT NOT NULL,
+            `title` TEXT NOT NULL,
+            `amount` INT NOT NULL,
+            `type` ENUM(
+            'replenishment','purchase','transfer','withdrawal',
+            'investment-purchase-stocks', 'investment-purchase-bonds', 'investment-purchase-currency', 'investment-purchase-metals',
+            'investment-sale-stocks', 'investment-sale-bonds', 'investment-sale-currency', 'investment-sale-metals'
+            ) DEFAULT 'replenishment',
+            `datetime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )");
+        }
+    }
+
     function create_securities() : void
     {
         global $conn;

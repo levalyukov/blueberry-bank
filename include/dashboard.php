@@ -19,6 +19,27 @@
         return $result;
     }
 
+    function get_user_account_id(int $client_id) : int
+    {
+        global $conn;
+        $result = 0;
+
+        $account = $conn->prepare("SELECT id FROM accounts WHERE user_id = ? AND account_name = 'Основной счёт'");
+        $account->bind_param("i", $client_id);
+        if ($account->execute()) {
+            $account->bind_result($result);
+            if (!$account->fetch()) {
+                die($conn->error);
+            }
+
+            $account->close();
+        } else {
+            die($conn->error);
+        }
+
+        return $result;
+    }
+
     function get_user_balance(int $client_id) : float 
     {
         global $conn;
@@ -53,6 +74,28 @@
 
         return $result;
     }
+
+    function get_user_accounts_id(int $client_id) : array
+    {
+        global $conn;
+        $result = [];
+        $temp = [];
+
+        $accounts = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
+        $accounts->bind_param("i", $client_id);
+        if ($accounts->execute()) {
+            $temp = $accounts->get_result()->fetch_all();
+        }
+
+        if (count($temp) > 0) {
+            for ($i = 0; $i < count($temp); $i++) {
+                array_push($result, $temp[$i][0]);
+            }
+        }
+
+        return $result;
+    }
+
 
     function get_user_month_income(int $client_id) : float 
     {

@@ -10,12 +10,12 @@
     $action = $_GET["action"];
     $account_id = $_POST["account_id"];
     $user_id = $_SESSION["user"]["client_id"];
-    $price = get_price($id);
+    $price = get_securities_price($id);
 
 
     if (!empty($value)) {
         $securitiesAdded = false;
-        $total_price = $value*get_price($id);
+        $total_price = $value*get_securities_price($id);
         if (get_user_balance_by_account_id($user_id, $account_id) >= $total_price) {   
             $securities_check = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ? AND securities_id = ?");
             $securities_check->bind_param("ii", $user_id, $id);
@@ -26,7 +26,6 @@
                 $securities_update->bind_param("iii", $value, $user_id, $id);
 
                 if (!$securities_update->execute()) {
-                    $securities_update->close();
                     $_SESSION["transaction-error"] = "Произошла ошибка при создании заявки: " . $securities_update->error;
                     header("Location: ../../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
                     exit();
@@ -45,12 +44,25 @@
             }
 
             $securities_check->close();
-            $transaction = $conn->prepare("UPDATE accounts SET balance = balance - ? WHERE id = ?");
-            $transaction->bind_param("di", $total_price, $account_id);
-            if ($securitiesAdded && $transaction->execute()) {
-                $transaction->close();
-                header("Location: ../../index.php?page=investment");
-                exit();              
+
+            $sender_account_id = 0;
+            $transaction_title = "Покупка ".get_type_transaction_header()." ".get_securities_name($id);
+            $transaction_type = 'investment-purchase-'.$type;
+            $transaction = $conn->prepare("INSERT INTO transactions
+            (sender_account_id, recipient_account_id, title, type, amount) VALUES (?,?,?,?,?)");
+            $transaction->bind_param("iissd", $sender_account_id, $account_id, $transaction_title, $transaction_type, $total_price);
+            if ($transaction->execute()) {
+                $balance = $conn->prepare("UPDATE accounts SET balance = balance - ? WHERE id = ?");
+                $balance->bind_param("di", $total_price, $account_id);
+                if ($securitiesAdded && $balance->execute()) {
+                    $balance->close();
+                    header("Location: ../../index.php?page=investment");
+                    exit();              
+                } else {
+                    $_SESSION["transaction-error"] = "Произошла ошибка при создании заявки.";
+                    header("Location: ../../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);
+                    exit();
+                }
             } else {
                 $_SESSION["transaction-error"] = "Произошла ошибка при создании заявки.";
                 header("Location: ../../index.php?page=investment&action=".$action."&type=".$type."&id=".$id);

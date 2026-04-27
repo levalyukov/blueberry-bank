@@ -13,7 +13,7 @@
 
     if (!empty($value)) {
         $securities_selled = false;
-        $total_price = $value*get_price($id);
+        $total_price = $value*get_securities_price($id);
 
         $check = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ? AND securities_id = ?");
         $check->bind_param("ii", $account_id, $id);
@@ -45,11 +45,22 @@
             }
 
             if ($securities_selled) {
-                $account = $conn->prepare("UPDATE accounts SET balance = balance + ? WHERE user_id = ? AND id = ?");
-                $account->bind_param("dii", $total_price, $user_id, $account_id);
-                if ($account->execute()) {
-                    header("Location: ../../index.php?page=investment");
-                    exit();  
+                $sender_account_id = 0;
+                $transaction_title = "Продажа ".get_type_transaction_header()." ".get_securities_name($id);
+                $transaction_type = 'investment-sale-'.$type;
+                $transaction = $conn->prepare("INSERT INTO transactions
+                (sender_account_id, recipient_account_id, title, type, amount) VALUES (?,?,?,?,?)");
+                $transaction->bind_param("iissd", $sender_account_id, $account_id, $transaction_title, $transaction_type, $total_price);
+
+                if ($transaction->execute()) {
+                    $account = $conn->prepare("UPDATE accounts SET balance = balance + ? WHERE user_id = ? AND id = ?");
+                    $account->bind_param("dii", $total_price, $user_id, $account_id);
+                    if ($account->execute()) {
+                        header("Location: ../../index.php?page=investment");
+                        exit();  
+                    } else {
+                        die($conn->error);
+                    }
                 } else {
                     die($conn->error);
                 }
