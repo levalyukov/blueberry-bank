@@ -17,7 +17,21 @@
         create_transactions();
     }
 
+    $investments_securities = get_invenstment_stocks($role["client_id"]);
     $transactions = array_reverse(get_user_history(get_user_accounts_id($role["client_id"])));
+    $chart = get_array_transactions(get_user_accounts_id($role["client_id"]));
+
+    switch ($_GET["action"]) {
+        case "refill":
+            include_once("modals/dashboard-refill.php");
+            break;
+        case "transfer":
+            include_once("modals/dashboard-transfer.php");
+            break;        
+        case "withdraw":
+            include_once("modals/dashboard-withdraw.php");
+            break;
+    }
 ?>
 
 
@@ -66,18 +80,18 @@
             <p class="text-slate-400 uppercase py-1">Доходы за месяц</p>
             <h1 class="
                 <?php 
-                    if (get_user_month_expenses($role['client_id']) < 0) {
-                        echo 'text-slate-500 uppercase text-3xl';
+                    if (get_user_month_expenses(get_user_accounts($role['client_id'])) < 0) {
+                        echo 'text-slate-500 uppercase text-2xl';
                     } else {
-                        echo 'text-slate-950 uppercase font-bold text-3xl';
+                        echo 'text-slate-950 uppercase font-bold text-2xl';
                     }
                 ?>
             ">
                 <?php 
-                    if (get_user_month_income($role['client_id']) < 0) {
+                    if (get_user_month_income(get_user_accounts($role['client_id'])) < 0) {
                         echo '-';
                     } else {
-                        echo number_format(get_user_month_income($role['client_id']), 2, ',', ' ') . ' ₽';
+                        echo number_format(get_user_month_income(get_user_accounts($role['client_id'])), 2, ',', ' ') . ' ₽';
                     }
                 ?> 
             </h1>
@@ -87,18 +101,18 @@
             <p class="text-slate-400 uppercase py-1">Расходы за месяц</p>
             <h1 class="
                 <?php 
-                    if (get_user_month_expenses($role['client_id']) < 0) {
-                        echo 'text-slate-500 uppercase text-3xl';
+                    if (get_user_month_expenses(get_user_accounts($role['client_id'])) < 0) {
+                        echo 'text-slate-500 uppercase text-2xl';
                     } else {
-                        echo 'text-slate-950 uppercase font-bold text-3xl';
+                        echo 'text-slate-950 uppercase font-bold text-2xl';
                     }
                 ?>
             ">
                 <?php 
-                    if (get_user_month_expenses($role['client_id']) < 0) {
+                    if (get_user_month_expenses(get_user_accounts($role['client_id'])) < 0) {
                         echo '-';
                     } else {
-                        echo number_format(get_user_month_expenses($role['client_id']), 2, ',', ' ') . ' ₽';
+                        echo number_format(get_user_month_expenses(get_user_accounts($role['client_id'])), 2, ',', ' ') . ' ₽';
                     }
                 ?>
             </h1>
@@ -106,18 +120,18 @@
         </div>
 
         <div class="flex gap-2 mt-auto">
-            <button class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
-            hover:text-slate-950 hover:bg-slate-300">
+            <a class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
+            hover:text-slate-950 hover:bg-slate-300" href="index.php?page=dashboard&action=refill">
                 Пополнить
-            </button>
-            <button class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
-            hover:text-slate-950 hover:bg-slate-300">
+            </a>
+            <a class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
+            hover:text-slate-950 hover:bg-slate-300" href="index.php?page=dashboard&action=transfer">
                 Перевести
-            </button>
-            <button class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
-            hover:text-slate-950 hover:bg-slate-300">
+            </a>
+            <a class="cursor-pointer py-3 rounded-xl text-slate-700 bg-slate-200 w-full text-center 
+            hover:text-slate-950 hover:bg-slate-300" href="index.php?page=dashboard&action=withdraw">
                 Снять
-            </button>
+            </a>
         </div>
       </div>
     </article>
@@ -126,13 +140,19 @@
         <p class="text-slate-400 uppercase py-1">Инвестиции</p>
         <?php if (has_invenstment_account((int)$role["client_id"])): ?>
             <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_investment_account($role["client_id"]), 2, ',', ' ') ?> ₽</h1>
-                <!-- <p class="text-green-500">+412 301,22 ₽ (+10,52 %)</p> -->
-                <div class="grid grid-cols-[repeat(auto-fit,minmax(32px,1fr))] mt-auto gap-1">
+            <!-- <p class="text-green-500">+412 301,22 ₽ (+10,52 %)</p> -->
+            <?php if (count($investments_securities) > 0): ?>
+                <div class="flex mt-auto gap-2">
 
-                <!-- <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75">
-                  <img class="rounded-2xl object-cover w-16 h-16" src="https://cdn.forbes.ru/forbes-static/new/2021/11/Company-619d3288c340a-619d3288e8cde.png" alt="">
-                </a> -->
-            </div>
+                    <?php for ($i = 0; $i < count($investments_securities) && $i < 6; $i++): ?>
+
+                        <a href="index.php?page=investment" class="cursor-pointer shrink-0 hover:opacity-75 w-16 h-16">
+                            <img class="rounded-2xl object-cover w-16 h-16" src="<?= get_securities_image($investments_securities[$i][2]) ?>" alt="">
+                        </a>
+
+                    <?php endfor ?>
+                </div>
+            <?php endif ?>
         <?php else: ?>
             <a href="index.php?page=investment" class="w-full border-1 border-slate-400 rounded-xl p-4 mt-auto text-center text-slate-700 
             bg-slate-100 hover:bg-blue-100 hover:border-blue-500 hover:text-blue-500">
@@ -142,7 +162,12 @@
     </article>
 
     <article class="col-span-2 h-full bg-slate-50 rounded-3xl p-8 flex flex-col gap-2">
-        <canvas id="myChart"></canvas>
+        <canvas id="chart"></canvas>
+        <script type="module">
+            import { dashboard_chart } from "./javascript/charts.js"
+            const array = <?php echo json_encode($chart); ?>;
+            dashboard_chart(array);
+        </script>
     </article>
 
     <article class="bg-slate-50  rounded-3xl p-8 flex flex-col gap-2">
@@ -165,9 +190,7 @@
                         } else if (strpos($transactions[$i][5], "replenishment") === 0) {
                             echo "bg-green-400"; 
                         } else if (strpos($transactions[$i][5], "withdrawal") === 0) {
-                            // echo "bg-"; 
-                        } else if (strpos($transactions[$i][5], "purchase") === 0) {
-                            echo "bg-";
+                                echo "bg-amber-400"; 
                         }
                     
                     ?> 
@@ -183,6 +206,8 @@
                                 echo "fa-solid fa-money-bill-transfer"; 
                             } else if (strpos($transactions[$i][5], "replenishment") === 0) {
                                 echo "fa-solid fa-plus"; 
+                            } else if (strpos($transactions[$i][5], "withdrawal") === 0) {
+                                    echo "fa-solid fa-arrow-up";
                             }
 
                         ?>
@@ -191,7 +216,7 @@
                     </span>
                     <span class="flex flex-col">
                         <h1 class="font-bold text-slate-950 text-md"><?= $transactions[$i][3] ?></h1>
-                        <p class="text-slate-700"><?= get_type_transaction($transactions[$i][5]) ?> • 2 мин. назад</p>
+                        <p class="text-slate-700"><?= get_type_transaction($transactions[$i][5]) ?> • <?= time_ago(strtotime($transactions[$i][6])) ?></p>
                     </span>
                 </span>
                 <p class="
@@ -199,17 +224,25 @@
                 <?=
                     (
                         strpos($transactions[$i][5], 'replenishment') === 0 ||
-                        strpos($transactions[$i][5], 'investment-sale') === 0
+                        strpos($transactions[$i][5], 'investment-sale') === 0 ||
+                        (
+                            $transactions[$i][5] === "transfer" && 
+                            in_array($transactions[$i][2], get_user_accounts($role["client_id"]))
+                        )
                     ) 
                     ? 'text-green-500' : 'text-slate-700'
                 ?>
-                
+                text-nowrap
                 ">
                 
                 <?=
                     (
                         strpos($transactions[$i][5], 'replenishment') === 0 ||
-                        strpos($transactions[$i][5], 'investment-sale') === 0
+                        strpos($transactions[$i][5], 'investment-sale') === 0 ||
+                        (
+                            $transactions[$i][5] === "transfer" && 
+                            in_array($transactions[$i][2], get_user_accounts($role["client_id"]))
+                        )
                     )
                     ? '+' : '-'
                 ?><?= number_format($transactions[$i][4], 2, ',', ' ') ?> ₽</p>
@@ -235,35 +268,3 @@
   </div>
 
 </section>
-
-<script>
-    new Chart(document.getElementById('myChart'), {
-        type: 'bar',
-        data: {
-            labels: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"],
-            datasets: [{
-                label: 'Траты за месяц',
-                data: [432612.01, 1432612.01, 5432612.01, 732612.01, 3432612.01, 1432612.01],
-                borderRadius: 10,
-                backgroundColor: [
-                    'rgba(255, 99, 132,  0.5)',
-                    'rgba(255, 159, 64,  0.5)',
-                    'rgba(255, 205, 86,  0.5)',
-                    'rgba(75, 192, 192,  0.5)',
-                    'rgba(54, 162, 235,  0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(201, 203, 207, 0.5)'
-                ],
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                  beginAtZero: true
-                }
-            }
-        }
-    });
-</script>

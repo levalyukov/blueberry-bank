@@ -8,6 +8,7 @@
     $db_error    = '';
 
     $conn = new mysqli($db_server, $db_user, $db_password, $db_name);
+    date_default_timezone_set('Asia/Yekaterinburg');
 
     if ($conn->connect_error) {
         $db_error = $conn->connect_error;
@@ -40,7 +41,7 @@
             `sender_account_id` INT NOT NULL,
             `recipient_account_id` INT NOT NULL,
             `title` TEXT NOT NULL,
-            `amount` INT NOT NULL,
+            `amount` DECIMAL(15,2) NOT NULL,
             `type` ENUM(
             'replenishment','purchase','transfer','withdrawal',
             'investment-purchase-stocks', 'investment-purchase-bonds', 'investment-purchase-currency', 'investment-purchase-metals',

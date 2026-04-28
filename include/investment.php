@@ -288,4 +288,41 @@
 
         return $result;
     }
+
+    function get_investment_securities_amount(int $client_id) : array
+    {
+        global $conn;
+        $result = [];
+        $temp = [];
+
+        $stocks_value = 0.0;
+        $bonds_value = 0.0;
+        $currency_value = 0.0;
+        $metals_value = 0.0;
+
+        $account = $conn->prepare("SELECT new_price, amount, type FROM portfolio WHERE user_id = ?");
+        $account->bind_param("i", $client_id);
+        if ($account->execute()) {
+            $temp = $account->get_result()->fetch_all();
+            for ($i = 0; $i < count($temp); $i++) {
+
+                if ($temp[$i][2] === "stocks") {
+                    $stocks_value += (float)$temp[$i][0] * $temp[$i][1];
+                } else if ($temp[$i][2] === "bonds") {
+                    $bonds_value += (float)$temp[$i][0] * $temp[$i][1];
+                } else if ($temp[$i][2] === "currency") {
+                    $currency_value += (float)$temp[$i][0] * $temp[$i][1];
+                } else if ($temp[$i][2] === "metals") {
+                    $metals_value += (float)$temp[$i][0] * $temp[$i][1];
+                }
+                
+            }
+
+            array_push($result, $stocks_value, $bonds_value, $currency_value, $metals_value);
+        } else {
+            die($conn->error);
+        }
+
+        return $result;
+    }
 ?>

@@ -37,7 +37,7 @@
               <el-options anchor="bottom start" popover class="max-h-56 w-(--button-width) overflow-auto rounded-md bg-slate-100 border-1 border-slate-400 shadow-md text-base outline-1 -outline-offset-1 outline-white/10 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm">
                 <el-option value="1" class="group/option relative block hover:bg-blue-100 hover:border-blue-500  cursor-default py-4 pr-9 pl-4 text-white select-none cursor-pointer focus:text-white focus:outline-hidden">
                   <div class="flex flex-col w-full">
-                    <span class="text-left text-slate-700 text-sm">Брокерский счет: 10123456-789</span>
+                    <span class="text-left text-slate-700 text-sm">Брокерский счет</span>
                     <span class="font-bold text-left text-slate-950"><?= number_format(get_investment_account($role["client_id"]), 2, ',', ' ') ?> ₽</span>
                   </div>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-500 group-not-aria-selected/option:hidden group-focus/option:text-blue-500 in-[el-selectedcontent]:hidden">
@@ -64,7 +64,7 @@
               <el-options anchor="bottom start" popover class="max-h-56 w-(--button-width) overflow-auto rounded-md bg-slate-100 border-1 border-slate-400 shadow-md text-base outline-1 -outline-offset-1 outline-white/10 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm">
                 <el-option value="1" class="group/option relative hover:bg-blue-100 hover:border-blue-500 block cursor-default py-4 pr-9 pl-4 text-white select-none cursor-pointer focus:text-white focus:outline-hidden">
                   <div class="flex flex-col w-full">
-                    <span class="text-left text-slate-700 text-sm">Текущий счёт **** 4567</span>
+                    <span class="text-left text-slate-700 text-sm">Текущий счёт</span>
                     <span class="font-bold text-left text-slate-950"><?= number_format(get_user_balance($role["client_id"]), 2, ',', ' ') ?> ₽</span>
                   </div>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-500 group-not-aria-selected/option:hidden group-focus/option:text-blue-500 in-[el-selectedcontent]:hidden">

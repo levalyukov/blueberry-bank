@@ -18,6 +18,7 @@
     }
 
     $transactions = array_reverse(get_user_history(get_user_accounts_id($role["client_id"])));
+    $chart = get_array_transactions(get_user_accounts_id($role["client_id"]));
 ?>
 
 <section class="px-12 pt-8 w-full h-screen overflow-y-scroll overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -30,7 +31,7 @@
     </header>
   
     <div class="grid grid-cols-2 gap-6">
-        <div class="flex flex-col gap-8 mb-8 bg-slate-50 p-8 rounded-3xl">
+        <div class="flex flex-col gap-6 mb-8 bg-slate-50 p-8 rounded-3xl">
             <?php if (count($transactions) > 0): ?>
                 <?php for ($i = 0; $i < count($transactions); $i++): ?>
                     <article class="flex justify-between items-center gap-4">
@@ -46,9 +47,7 @@
                             } else if (strpos($transactions[$i][5], "replenishment") === 0) {
                                 echo "bg-green-400"; 
                             } else if (strpos($transactions[$i][5], "withdrawal") === 0) {
-                                // echo "bg-"; 
-                            } else if (strpos($transactions[$i][5], "purchase") === 0) {
-                                echo "bg-";
+                                echo "bg-amber-400"; 
                             }
                         
                         ?> 
@@ -64,6 +63,8 @@
                                     echo "fa-solid fa-money-bill-transfer"; 
                                 } else if (strpos($transactions[$i][5], "replenishment") === 0) {
                                     echo "fa-solid fa-plus"; 
+                                } else if (strpos($transactions[$i][5], "withdrawal") === 0) {
+                                    echo "fa-solid fa-arrow-up";
                                 }
 
                             ?>
@@ -72,25 +73,35 @@
                         </span>
                         <span class="flex flex-col">
                             <h1 class="font-bold text-slate-950 text-md"><?= $transactions[$i][3] ?></h1>
-                            <p class="text-slate-700"><?= get_type_transaction($transactions[$i][5]) ?> • 2 мин. назад</p>
+                            <p class="text-slate-700"><?= get_type_transaction($transactions[$i][5]) ?> • 
+                                <?= time_ago(strtotime($transactions[$i][6])) ?>
+                            </p>
                         </span>
                     </span>
+
                 <p class="
                 
                 <?=
                     (
                         strpos($transactions[$i][5], 'replenishment') === 0 ||
-                        strpos($transactions[$i][5], 'investment-sale') === 0
+                        strpos($transactions[$i][5], 'investment-sale') === 0 ||
+                        (
+                            $transactions[$i][5] === "transfer" && 
+                            in_array($transactions[$i][2], get_user_accounts($role["client_id"]))
+                        )
                     ) 
                     ? 'text-green-500' : 'text-slate-700'
                 ?>
                 
                 ">
-                
                 <?=
                     (
                         strpos($transactions[$i][5], 'replenishment') === 0 ||
-                        strpos($transactions[$i][5], 'investment-sale') === 0
+                        strpos($transactions[$i][5], 'investment-sale') === 0 ||
+                        (
+                            $transactions[$i][5] === "transfer" && 
+                            in_array($transactions[$i][2], get_user_accounts($role["client_id"]))
+                        )
                     )
                     ? '+' : '-'
                 ?><?= number_format($transactions[$i][4], 2, ',', ' ') ?> ₽</p>
@@ -107,20 +118,21 @@
             <article class="bg-slate-50 rounded-3xl p-8 h-100">
                 <canvas id="chart"></canvas>
                 <script type="module">
-                    import { initChart } from "./javascript/charts.js"
-                    initChart("<?php echo $filter ?>");
+                    import { history_chart } from "./javascript/charts.js"
+                    const array = <?php echo json_encode($chart); ?>;
+                    history_chart(array);
                 </script>
             </article>
 
             <article class="bg-slate-50 rounded-3xl p-8 flex flex-col gap-10">
                 <span class="flex flex-col gap-2">
                     <p class="text-slate-400 uppercase py-1">Доходы за месяц</p>
-                    <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_user_month_income($role['client_id']),2,',',' ') ?> ₽</h1>
+                    <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_user_month_income(get_user_accounts($role['client_id'])),2,',',' ') ?> ₽</h1>
                 </span>
 
                 <span class="flex flex-col gap-2 mt-auto">
                     <p class="text-slate-400 uppercase py-1">Расходы за месяц</p>
-                    <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_user_month_expenses($role['client_id']),2,',',' ') ?> ₽</h1>
+                    <h1 class="text-slate-950 uppercase font-bold text-3xl"><?= number_format(get_user_month_expenses(get_user_accounts($role['client_id'])),2,',',' ') ?> ₽</h1>
                 </span>
             </article>
         </div>

@@ -8,6 +8,7 @@
     $action = $_GET["action"] ?? "";
     require_once("include/investment.php");
 
+    $chart = get_investment_securities_amount($role["client_id"]);
     $portfolio = get_investment_portfolio($role["client_id"]);
     $stocks = get_invenstment_stocks($role["client_id"]);
     $bonds = get_invenstment_bonds($role["client_id"]);
@@ -25,10 +26,6 @@
 
         case "offs":
             include_once("modals/investment-offs.php");
-            break;
-
-        case "history":
-            include_once("modals/investment-history.php");
             break;
 
         case "buy":
@@ -79,11 +76,6 @@
               hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=offs">
                                     Вывести
                                 </a>
-
-                                <a class="cursor-pointer py-4 rounded-xl text-slate-700 bg-slate-200 w-full text-center
-              hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=history">
-                                    История
-                                </a>
                             </span>
                             <a class="cursor-pointer py-4 rounded-xl text-center text-slate-700 bg-slate-200 w-full
             hover:text-slate-950 hover:bg-slate-300 capitalize" href="index.php?page=investment&action=market">
@@ -95,8 +87,9 @@
                     <article class="bg-slate-50 rounded-3xl p-8 flex flex-col gap-2 w-full">
                         <canvas id="chart"></canvas>
                         <script type="module">
-                            import { investmentChart } from "./javascript/charts.js"
-                            investmentChart();
+                            import { investment_chart } from "./javascript/charts.js"
+                            const array = <?php echo json_encode($chart); ?>;
+                            investment_chart(array);
                         </script>
                     </article>
                 </div>
