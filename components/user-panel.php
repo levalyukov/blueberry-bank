@@ -21,17 +21,17 @@
         </button>
         <el-menu anchor="bottom end" class="w-55 origin-top-right rounded-xl bg-slate-50 mt-2 border-1 border-slate-300 shadow-md">
             <form class="py-1" action="include/client-dropdown.php" method="POST">
-                <button href="#" class="w-full cursor-pointer flex gap-2 px-4 py-3 text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
+                <a href="#" class="w-full cursor-pointer flex gap-2 px-4 py-3 text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
                     <span class="w-5 h-5 text-md"><i class="fa-solid fa-user"></i></span> Аккаунт
-                </button>
+                </a>
                 
-                <button href="#" class="w-full cursor-pointer flex gap-2 px-4 py-3 text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
+                <a href="index.php?page=dashboard&user=support" class="w-full cursor-pointer flex gap-2 px-4 py-3 text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
                     <span class="w-5 h-5 text-md"><i class="fa-solid fa-headset"></i></span> Техподдержка
-                </button>
+                </a>
                 
-                <button href="#" class="w-full cursor-pointer flex gap-2 px-4 py-3 text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
+                <a href="#" class="w-full cursor-pointer flex gap-2 px-4 py-3 text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
                     <span class="w-5 h-5 text-md"><i class="fa-solid fa-gear"></i></span> Настройки
-                </button>
+                </a>
                 
                 <button type="submit" name="client-signout" class="cursor-pointer flex gap-2 w-full px-4 py-3 text-left text-md text-slate-700 focus:bg-slate-200/75 focus:text-slate-950 focus:outline-hidden">
                     <span class="w-5 h-5 text-md"><i class="fa-solid fa-door-open"></i></span> Выйти

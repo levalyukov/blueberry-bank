@@ -12,9 +12,16 @@
         }
 
         if ($now - $user >= 18 && $now - $user <= 100) {
-            if (!$conn->query("SELECT * FROM accounts WHERE account_name = 'Брокерский счёт'")->fetch_assoc()) {
+            $check = $conn->prepare("SELECT * FROM accounts WHERE user_id = ? AND account_name = 'Брокерский счёт'");
+            $check->bind_param("i", $_SESSION["user"]["client_id"]);
+
+            if (!$check->execute()) {
+                die($conn->error);
+            }
+
+            if (!$check->get_result()->fetch_assoc()) {
                 $new_account = $conn->prepare("INSERT INTO accounts (user_id,account_name) VALUES (?, 'Брокерский счёт')");
-                $new_account->bind_param("s", $_SESSION["user"]["client_id"]);
+                $new_account->bind_param("i", $_SESSION["user"]["client_id"]);
                 $new_account->execute();
             }
         }

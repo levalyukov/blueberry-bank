@@ -56,7 +56,7 @@
 
     <div class="flex gap-4">
         <div class="flex flex-col w-full gap-6">
-            <?php if (has_invenstment_account((int)$role["client_id"]) == true): ?>
+            <?php if (has_invenstment_account((int)$role["client_id"])): ?>
                 <div class="flex h-75 gap-6">
                     <article class="bg-slate-50 rounded-3xl p-8 flex flex-col gap-2 w-full">
                         <p class="text-slate-400 uppercase py-1">Брокерский счет: 10123456-789</p>

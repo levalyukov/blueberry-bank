@@ -2,7 +2,7 @@
     require_once("include/dashboard.php");
     require_once("include/investment/investment-buy.php");
 
-    $accounts = get_user_accounts($role["client_id"]);
+    $accounts = get_user_accounts_full($role["client_id"]);
     $price = get_securities_price($_GET["id"]);
 ?>
 
@@ -47,7 +47,6 @@
                         <el-options anchor="bottom start" popover
                             class="max-h-56 w-(--button-width) overflow-auto rounded-md bg-slate-100 border-1 border-slate-400 shadow-md text-base outline-1 -outline-offset-1 outline-white/10 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm">
                             <?php for ($i = 0; $i < count($accounts); $i++): ?>
-
                                 <el-option value="<?= $accounts[$i][0] ?>"
                                     class="group/option relative hover:bg-blue-100 hover:border-blue-500 block cursor-default py-4 pr-9 pl-4 text-white select-none cursor-pointer focus:text-white focus:outline-hidden">
                                     <div class="flex flex-col w-full">

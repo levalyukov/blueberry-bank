@@ -5,12 +5,21 @@
 -->
 
 <?php 
+    require_once("include/db.php");
     require_once("include/dashboard.php");
     require_once("include/investment.php");
     require_once("include/transactions.php");
 
     if (!$conn->query("SHOW TABLES LIKE 'accounts'")->fetch_row()) {
         create_accounts();
+    }
+
+    if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
+        create_securities();
+    }
+
+    if (!$conn->query("SHOW TABLES LIKE 'securities'")->fetch_row()) {
+        create_securities();
     }
 
     if (!$conn->query("SHOW TABLES LIKE 'transactions'")->fetch_row()) {
@@ -20,6 +29,12 @@
     $investments_securities = get_invenstment_stocks($role["client_id"]);
     $transactions = array_reverse(get_user_history(get_user_accounts_id($role["client_id"])));
     $chart = get_array_transactions(get_user_accounts_id($role["client_id"]));
+
+    switch ($_GET["user"]) {
+        case "support":
+            include_once("modals/user-support.php");
+            break;
+    }
 
     switch ($_GET["action"]) {
         case "refill":
@@ -43,8 +58,6 @@
 
     <?php include_once("user-panel.php") ?>
   </header>
-
-  <!-- Dashboard -->
 
   <div class="grid grid-cols-[repeat(auto-fit,minmax(450px,1fr))] gap-6">
     <article id="total-balance" class="bg-slate-50 h-65 rounded-3xl p-8">

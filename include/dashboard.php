@@ -1,23 +1,22 @@
 <?php   
-    /* ... */
     session_start();
     require_once "db.php";
     require_once "transactions.php";
 
-    function get_user_balance_by_account_id(int $user_id, int $account_id) : float
+    function get_user_balance_by_account_id(int $user_id) : float
     {
         global $conn;
-        $result = 0;
+        $result = 0.0;
 
-        $account = $conn->prepare("SELECT balance FROM accounts WHERE user_id = ? AND id = ?");
-        $account->bind_param("ii", $user_id, $account_id);
+        $account = $conn->prepare("SELECT balance FROM accounts WHERE user_id = ? AND account_name = 'Основной счёт'");
+        $account->bind_param("i", $user_id);
         if ($account->execute()) {
-            $result = $account->get_result()->fetch_assoc()["balance"];
+            $result = $account->get_result()->fetch_assoc();
         } else {
             die($conn->error);
         }
 
-        return $result;
+        return (float)$result["balance"] ?? 0.0;
     }
 
     function get_user_account_id(int $client_id) : int
@@ -73,11 +72,26 @@
         if ($stmt->execute()) {
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
-                $ids[] = $row['id'];
+                array_push($ids, $row['id']);
             }
-        }        
+        }    
 
         return $ids;
+    }
+
+    function get_user_accounts_full(int $client_id) : array
+    {
+        global $conn;
+        $result = [];
+
+        $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
+        $stmt->bind_param("i", $client_id);
+        
+        if ($stmt->execute()) {
+            $result = $stmt->get_result()->fetch_all();
+        }    
+
+        return $result;
     }
 
     function get_user_accounts_id(int $client_id) : array

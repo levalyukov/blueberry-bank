@@ -8,7 +8,6 @@
     $db_error    = '';
 
     $conn = new mysqli($db_server, $db_user, $db_password, $db_name);
-    date_default_timezone_set('Asia/Yekaterinburg');
 
     if ($conn->connect_error) {
         $db_error = $conn->connect_error;
@@ -80,7 +79,7 @@
     function init_portfolio() : void
     {
         global $conn;
-        if (!$conn->query("CREATE TABLE `portfolio` (
+        $conn->query("CREATE TABLE `portfolio` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `user_id` INT NOT NULL,
             `securities_id` INT NOT NULL,
@@ -88,9 +87,7 @@
             `old_price` DECIMAL(10,2) NOT NULL,
             `amount` INT NOT NULL,
             `type` ENUM('stocks','bonds','currency','metals') DEFAULT 'stocks'
-        )")) {
-            die($conn->error);
-        }
+        )");
     }
 
     function init_stocks() : void 
