@@ -7,14 +7,15 @@
     $db_password = '';
     $db_error    = '';
 
-    $conn = new mysqli($db_server, $db_user, $db_password, $db_name);
+    $conn = new mysqli($db_server, $db_user, $db_password);
 
     if ($conn->connect_error) {
-        $db_error = $conn->connect_error;
+        $db_error = $conn->error;
     } else {
-        $database = $conn->query("CREATE DATABASE bank");
-        if ($database) {
-            $database->close();
+        if ($conn->query("CREATE DATABASE IF NOT EXISTS `" . $db_name . "`")) {
+            $conn->select_db($db_name); 
+        } else {
+            $db_error = $conn->error;
         }
     }
 

@@ -9,6 +9,7 @@
         $delete = $conn->prepare("DELETE FROM accounts WHERE user_id = ? AND account_name = 'Брокерский счёт'");
         $delete->bind_param("i", $client_id);
         if ($delete->execute()) {
+            
             // Добавить потом сюда отправку уведомление в центр уведомлений пользователя, если не забуду
             header("Location: ../../index.php");
             exit();  

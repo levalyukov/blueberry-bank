@@ -23,7 +23,7 @@
             `email` VARCHAR(128) UNIQUE NOT NULL,
             `password` TEXT NOT NULL
         )")) {
-        die($conn->error);
+            die($conn->error);
         }
     }
 
@@ -34,7 +34,7 @@
     $check_passport_serial->bind_param("i", $passport_serial);
     if ($check_passport_serial->execute()) {
 
-        if ($check_passport_serial->get_result()->fetch_all() == 0) {
+        if ($check_passport_serial->get_result()->fetch_row() == 0) {
             $passport_serial_correct = true;
         } else {
             $_SESSION["register_error"] = "Перепроверьте серию и номер паспорта.";
@@ -51,8 +51,8 @@
     $check_passport_number->bind_param("i", $passport_number);
     if ($check_passport_number->execute()) {
         
-        if ($check_passport_number->get_result()->fetch_all() == 0) {
-            $check_passport_number = true;
+        if ($check_passport_number->get_result()->fetch_row() == 0) {
+            $passport_number_correct = true;
         } else {
             $_SESSION["register_error"] = "Перепроверьте серию и номер паспорта.";
             header("Location: ../../index.php?auth=register");
