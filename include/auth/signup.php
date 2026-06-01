@@ -27,6 +27,44 @@
         }
     }
 
+    $passport_serial_correct = false;
+    $passport_number_correct = false;
+
+    $check_passport_serial = $conn->prepare("SELECT * FROM clients WHERE passport_serial = ?");
+    $check_passport_serial->bind_param("i", $passport_serial);
+    if ($check_passport_serial->execute()) {
+
+        if ($check_passport_serial->get_result()->fetch_all() == 0) {
+            $passport_serial_correct = true;
+        } else {
+            $_SESSION["register_error"] = "Перепроверьте серию и номер паспорта.";
+            header("Location: ../../index.php?auth=register");
+            exit();
+        }
+
+        $check_passport_serial->close();
+    } else {
+        die($conn->error);
+    }
+
+    $check_passport_number = $conn->prepare("SELECT * FROM clients WHERE passport_number = ?");
+    $check_passport_number->bind_param("i", $passport_number);
+    if ($check_passport_number->execute()) {
+        
+        if ($check_passport_number->get_result()->fetch_all() == 0) {
+            $check_passport_number = true;
+        } else {
+            $_SESSION["register_error"] = "Перепроверьте серию и номер паспорта.";
+            header("Location: ../../index.php?auth=register");
+            exit();
+        }
+
+        $check_passport_number->close();
+    } else {
+        die($conn->error);
+    }
+
+
     if ($password !== $password_confirm) {
         $_SESSION["register_error"] = 'Пароли не совпадают.';
         header("Location: ../../index.php?auth=register");

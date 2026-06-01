@@ -44,6 +44,7 @@
     <script src="https://kit.fontawesome.com/b1cf2338b1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
     <script type="module" src="javascript/charts.js"></script>
+    <script type="module" src="javascript/timer.js"></script>
 </head>
     <body class="bg-slate-200/75">
         <main class="flex">

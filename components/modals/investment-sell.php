@@ -3,7 +3,7 @@
     require_once("include/investment.php");
     require_once("include/investment/investment-sell.php");
 
-    $accounts = get_user_accounts($role["client_id"]);
+    $accounts = get_user_accounts_full($role["client_id"]);
     $price = get_securities_price($_GET["id"]);
     $securities = get_securities_by_id($_GET["id"])["amount"] ?? 0;
 

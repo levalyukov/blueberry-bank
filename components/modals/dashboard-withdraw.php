@@ -27,7 +27,7 @@
                 <form method="POST" action="include/account/account-withdraw.php" class="flex flex-col gap-6 h-full">
                     <span class="flex flex-col gap-2">
                         <label class="font-bold text-slate-950 text-lg" for="">Счёт</label>
-                        <el-select id="select" name="selected" value="1" class="w-full">
+                        <el-select id="select" name="selected" value="<?= get_user_account_id($role["client_id"]) ?>" class="w-full">
                             <button type="button" class="flex w-full cursor-pointer p-4 bg-slate-100 outline-none border-1 rounded-lg text-slate-700
               hover:border-blue-500 hover:bg-blue-100 placeholder:text-state-400">
                                 <el-selectedcontent class="flex flex-col w-full"></el-selectedcontent>
@@ -41,7 +41,7 @@
 
                             <el-options anchor="bottom start" popover
                                 class="max-h-56 w-(--button-width) overflow-auto rounded-md bg-slate-100 border-1 border-slate-400 shadow-md text-base outline-1 -outline-offset-1 outline-white/10 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm">
-                                <el-option value="1"
+                                <el-option value="<?= get_user_account_id($role["client_id"]) ?>"
                                     class="group/option relative block hover:bg-blue-100 hover:border-blue-500 cursor-default p-4 text-white select-none cursor-pointer focus:text-white focus:outline-hidden">
                                     <div class="flex flex-col w-full">
                                         <span class="text-left text-slate-700 text-sm">Основной счёт</span>
@@ -73,7 +73,7 @@
 
                     <button class="w-full text-slate-950 bg-slate-300/50 cursor-pointer text-center gap-2 p-4 
           hover:bg-blue-100 hover:text-blue-500 rounded-xl mt-auto">
-                        Пополнить
+                        Снять
                     </button>
                 </form>
             </div>

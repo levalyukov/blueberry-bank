@@ -12,11 +12,10 @@
     $user_id = $_SESSION["user"]["client_id"];
     $price = get_securities_price($id);
 
-
     if (!empty($value)) {
         $securitiesAdded = false;
         $total_price = $value*get_securities_price($id);
-        if (get_user_balance_by_account_id($user_id, $account_id) >= $total_price) {   
+        if (get_investment_account($user_id, $account_id) >= $total_price) {   
             $securities_check = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ? AND securities_id = ?");
             $securities_check->bind_param("ii", $user_id, $id);
             $securities_check->execute();

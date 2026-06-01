@@ -1,7 +1,9 @@
 <?php
     session_start();
     require_once("db.php");
-    date_default_timezone_set('Asia/Yekaterinburg');
+
+    // date_default_timezone_set('Asia/Yekaterinburg');
+    date_default_timezone_set('Europe/Moscow');
 
     function get_user_history(array $client_accounts): array
     {

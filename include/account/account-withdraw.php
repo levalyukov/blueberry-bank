@@ -6,8 +6,7 @@
     $account_id = $_POST["selected"];
     $value = $_POST["withdrawal-value"];
 
-    if (!empty($value) && $value > 0 && 
-        $value <= get_user_balance_by_account_id($_SESSION["user"]["client_id"], $account_id)) {
+    if (!empty($value) && $value > 0 && $value <= get_user_balance_by_account_id($_SESSION["user"]["client_id"], $account_id)) {
         $withdrawal = $conn->prepare("UPDATE accounts SET balance = balance - ? WHERE user_id = ? AND id = ?");
         $withdrawal->bind_param("dii", $value, $_SESSION["user"]["client_id"], $account_id);
 

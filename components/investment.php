@@ -1,9 +1,3 @@
-<!-- 
-
-    
-
--->
-
 <?php
     $action = $_GET["action"] ?? "";
     require_once("include/investment.php");
@@ -35,6 +29,10 @@
         case "sell":
             include_once("modals/investment-sell.php");
             break;
+
+        case "account-close":
+            include_once("modals/investment-close.php");
+            break;
     }
 ?>
 
@@ -59,26 +57,30 @@
             <?php if (has_invenstment_account((int)$role["client_id"])): ?>
                 <div class="flex h-75 gap-6">
                     <article class="bg-slate-50 rounded-3xl p-8 flex flex-col gap-2 w-full">
-                        <p class="text-slate-400 uppercase py-1">Брокерский счет: 10123456-789</p>
+                        <span class="flex justify-between">
+                            <p class="text-slate-400 uppercase py-1">Брокерский счет: 10123456-789</p>
+                            <a href="index.php?page=investment&action=account-close" class="text-slate-700 bg-slate-200 py-2 px-4 rounded-md cursor-pointer 
+                            hover:bg-slate-300 hover:text-slate-700">Закрыть счёт</a>
+                        </span>
+
                         <h1 class="text-slate-950 uppercase font-bold text-3xl">
                             <?= number_format(get_investment_balance($role["client_id"]), 2, ',', ' ') ?> ₽
                         </h1>
-                        </span>
 
                         <div class="flex flex-col gap-2 mt-auto">
                             <span class="flex gap-2">
                                 <a class="cursor-pointer py-4 rounded-xl text-slate-700 bg-slate-200 w-full text-center
-              hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=refill">
+                                hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=refill">
                                     Пополнить
                                 </a>
 
                                 <a class="cursor-pointer py-4 rounded-xl text-slate-700 bg-slate-200 w-full text-center
-              hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=offs">
+                                hover:text-slate-950 hover:bg-slate-300" href="index.php?page=investment&action=offs">
                                     Вывести
                                 </a>
                             </span>
                             <a class="cursor-pointer py-4 rounded-xl text-center text-slate-700 bg-slate-200 w-full
-            hover:text-slate-950 hover:bg-slate-300 capitalize" href="index.php?page=investment&action=market">
+                            hover:text-slate-950 hover:bg-slate-300 capitalize" href="index.php?page=investment&action=market">
                                 Витрина инвестиций
                             </a>
                         </div>
