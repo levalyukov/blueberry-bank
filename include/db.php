@@ -1,10 +1,10 @@
 <?php
-    // error_reporting(0);
+    error_reporting(0);
 
     $db_server   = 'localhost';
     $db_name     = 'bank';
     $db_user     = 'root';
-    $db_password = '';
+    $db_password = 'root';
     $db_error    = '';
 
     $conn = new mysqli($db_server, $db_user, $db_password);
